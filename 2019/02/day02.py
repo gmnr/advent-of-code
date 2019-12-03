@@ -16,23 +16,7 @@ with open('input.txt', 'r') as f:
 
 # Part 1
 source_opcode = [int(x) for x in data]
-opcode1 = list(source_opcode)
 
-# initailize the array as instructed in the requirements
-opcode1[1], opcode1[2] = 12, 2 
-
-for i in range(0, len(opcode1), 4):
-    if opcode1[i] == 1:
-        opcode1[opcode1[i + 3]] = opcode1[opcode1[i + 1]] + opcode1[opcode1[i + 2]]
-    if opcode1[i] == 2:
-        opcode1[opcode1[i + 3]] = opcode1[opcode1[i + 1]] * opcode1[opcode1[i + 2]]
-    if opcode1[i] == 99:
-        break
-
-solution1 = opcode1[0]
-
-
-# Part 2
 def opcode_routine(lst, noun, verb):
     """wrap the opcode routine into a function"""
 
@@ -50,21 +34,23 @@ def opcode_routine(lst, noun, verb):
 
     return arr[0]
 
+solution1 = opcode_routine(source_opcode, 12, 2)
 
+
+# Part 2
 expected_result = 19690720
 
+# Loop for all permutations of 2 digits between 0-99
 for noun in range(100):
     for verb in range(100):
         if opcode_routine(source_opcode, noun, verb) == expected_result:
             solution2 = 100 * noun + verb
             break
-        else:
-            continue
-        break
     else:
         continue
     break
 
+# Print the solutions
 print(f"The solution for Part 1 is {solution1}")
 print(f"The solution for Part 2 is {solution2}")
 
