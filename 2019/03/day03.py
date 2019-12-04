@@ -39,9 +39,10 @@ def parse_instructions(pipe):
 
     return arr
 
-# pp stands for parsed pipe
+# pp stands for parsed_pipe
 pp1 = parse_instructions(pipe1)
 pp2 = parse_instructions(pipe2)
+
 
 intersections = list()  # initialize 
 for i in range(len(pp1)):
@@ -49,18 +50,19 @@ for i in range(len(pp1)):
 
         try:  # wrap into try/except to avoid "out of index" error
             if pp1[i][0] == pp1[i + 1][0]:  # check vertical
-                if pp2[j][1] == pp2[j + 1][1] and pp1[i][1] in range(pp2[j][0], pp2[j + 1][0]):
+                if pp2[j][1] == pp2[j + 1][1] and abs(pp2[j][1]) in [abs(x) for x in range(pp1[i][1], pp1[i + 1][1], 1)]:
                     match = [pp1[i][0], pp2[j][1]]
                     intersections.append(match)
 
 
             if pp1[i][1] == pp1[i + 1][1]:  # check horizontal
-                if pp2[j][0] == pp2[j + 1][0] and pp1[i][0] in range(pp2[j][1], pp2[j + 1][1]):
+                if pp2[j][0] == pp2[j + 1][0] and abs(pp2[j][0]) in [abs(x) for x in range(pp1[i][0], pp1[i + 1][0], 1)]:
                     match = [pp2[j][0], pp1[i][1]]
                     intersections.append(match)
+
         except IndexError:
             pass
 
-print(len(intersections))
-solution = [abs(0 - x[0]) + abs(0 - x[1]) for x in intersections]
+solution = min([abs(0 - x[0]) + abs(0 - x[1]) for x in intersections])
+print(solution)
 
