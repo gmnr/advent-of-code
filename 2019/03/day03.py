@@ -19,7 +19,7 @@ pipe2 = data[1].split(',')
 
 
 def parse_instructions(pipe):
-    """Covert the instructions into an array of coordinates"""
+    """Convert the instructions into an array of coordinates"""
 
     arr = list()  # initialize the list
     ref = [0, 0]  # define the center
@@ -39,5 +39,28 @@ def parse_instructions(pipe):
 
     return arr
 
-parsed_pipe1 = parse_instructions(pipe1)
-parsed_pipe2 = parse_instructions(pipe2)
+# pp stands for parsed pipe
+pp1 = parse_instructions(pipe1)
+pp2 = parse_instructions(pipe2)
+
+intersections = list()  # initialize 
+for i in range(len(pp1)):
+    for j in range(len(pp2)):
+
+        try:  # wrap into try/except to avoid "out of index" error
+            if pp1[i][0] == pp1[i + 1][0]:  # check vertical
+                if pp2[j][1] == pp2[j + 1][1] and pp1[i][1] in range(pp2[j][0], pp2[j + 1][0]):
+                    match = [pp1[i][0], pp2[j][1]]
+                    intersections.append(match)
+
+
+            if pp1[i][1] == pp1[i + 1][1]:  # check horizontal
+                if pp2[j][0] == pp2[j + 1][0] and pp1[i][0] in range(pp2[j][1], pp2[j + 1][1]):
+                    match = [pp2[j][0], pp1[i][1]]
+                    intersections.append(match)
+        except IndexError:
+            pass
+
+print(len(intersections))
+solution = [abs(0 - x[0]) + abs(0 - x[1]) for x in intersections]
+
