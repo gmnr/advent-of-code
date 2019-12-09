@@ -44,8 +44,10 @@ pp2 = parse_instructions(pipe2)
 
 
 # find the intersection between the two lists
+set_pp1 = set(tuple(x) for x in pp1)
+set_pp2 = set(tuple(x) for x in pp2)
 
-
+intersections = list(set(set_pp1).intersection(set_pp2))  # convert the two lists into sets to apply intersection
 
 solution = min([abs(0 - x[0]) + abs(0 - x[1]) for x in intersections])
 print(solution)
