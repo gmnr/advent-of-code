@@ -49,5 +49,13 @@ set_pp2 = set(tuple(x) for x in pp2)
 
 intersections = list(set(set_pp1).intersection(set_pp2))  # convert the two lists into sets to apply intersection
 
-solution = min([abs(0 - x[0]) + abs(0 - x[1]) for x in intersections])
-print(solution)
+solution1 = min([abs(0 - x[0]) + abs(0 - x[1]) for x in intersections])
+print(solution1)
+
+
+# Part 2
+pp1_distance = [pp1.index(list(x)) + 1 for x in intersections]
+pp2_distance = [pp2.index(list(x)) + 1 for x in intersections]
+
+solution2 = min([x + y for x, y in zip(pp1_distance, pp2_distance)])
+print(solution2)
