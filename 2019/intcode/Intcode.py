@@ -14,8 +14,6 @@ class Intcode():
     def __init__(self, data):
         self.data = data
 
-
-    @property
     def instructions(self):
 
         instructions = self.data.strip().split(",")
@@ -23,5 +21,7 @@ class Intcode():
 
         return instructions
 
-    
+    self.data = instructions(data)
 
+    def __repr__(self):
+        return f"The len of the data is {len(self.data)}"
