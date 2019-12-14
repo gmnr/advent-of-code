@@ -14,6 +14,7 @@ problem = [str (x) for x in range(240920, 789857 + 1)]  # convert into string
 # Part 1
 import re   # solve with regex
 
+
 def check_ord(lst):
     """Check the ordinality of a number"""
 
@@ -31,7 +32,7 @@ print(len(solution1))
 from collections import Counter
 
 def find_two(dct):
-    """Pass the all function to a dictionary and check if at least one value is duplicate """
+    """Pass the any function to a dictionary and check if at least one value is duplicate """
 
     return any(x == 2 for x in dct.values())
 
