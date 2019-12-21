@@ -14,8 +14,18 @@ __license__ = 'GPL'
 
 
 from datetime import date
+from time import sleep
 import os
 import requests
+
+
+# wait for internet connection to be restored
+sleep(12)
+
+# get the directory of the file
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 
 today = date.today()
