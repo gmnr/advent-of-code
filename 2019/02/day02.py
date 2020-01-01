@@ -18,8 +18,8 @@ with open('input.txt', 'r') as f:
 
 
 solution = Intcode(data)
+target = 19690720
 
 # Print the solutions
-print(f"The solution for Part 1 is {solution.day2()}")
-print(f"The solution for Part 2 is {solution.find_target(19690720)}")
-
+print(f"The solution for Part 1 is {solution.op_parser()}")
+print(f"The solution for Part 2 is {solution.find_target(target)}")
