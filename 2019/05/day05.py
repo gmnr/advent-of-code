@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-solution for day5 2019
+solution for day05 2019
 """
 
 __author__ = 'Guido Minieri'
@@ -11,17 +11,22 @@ __license__ = 'GPL'
 
 # get data
 with open('input.txt', 'r') as f:
-    data = f.read().strip().split(",")
+    data = f.read()
 
 
-# Part 1
-import sys
-sys.path.append('..')
-
-
+import sys; sys.path.append('..')
 from intcode import Intcode
 
 
-int_op = Intcode(data)
-print(int_op)
+# part 1
+solution1 = Intcode(data, 1)
+solution1.op_parser()
+part1 = solution1.get_diagnostic()
 
+
+# part 2
+solution2 = Intcode(data, 5)
+solution2.op_parser()
+part2 = solution2.get_diagnostic()
+
+print(f"The solution for Part 1 is {part1}\nTHe solution for Part 2 is {part2}")
