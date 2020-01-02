@@ -21,5 +21,5 @@ solution = Intcode(data)
 target = 19690720
 
 # Print the solutions
-print(f"The solution for Part 1 is {solution.op_parser()}")
+print(f"The solution for Part 1 is {solution.op_parser(12, 2)}")
 print(f"The solution for Part 2 is {solution.find_target(target)}")
