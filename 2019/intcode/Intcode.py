@@ -85,7 +85,7 @@ class Intcode():
 
 
     def op4(self):
-        """outputs the value of it's only parameter"""
+        """outputs the value of its only parameter"""
         self.parse_parameter()
 
         if self.p1:
@@ -97,7 +97,7 @@ class Intcode():
 
 
     def op5(self):
-        """jumps if true"""
+        """if the first parameter is different than 0 make the cursor equal to the second parameter (or the second parameter value at location)"""
         self.parse_parameter()
 
         if self.p1:
@@ -125,7 +125,7 @@ class Intcode():
 
 
     def op6(self):
-        """jumps if false"""
+        """if the first parameter is equat to 0 make the cursor equal to the second parameter (or the second parameter value at location)"""
         self.parse_parameter()
 
         if self.p1:
@@ -153,7 +153,7 @@ class Intcode():
 
 
     def op7(self):
-        """less then"""
+        """if the first parameter is less than the second parameter change the value of the thrid parameter to 1 else to 0"""
         self.parse_parameter()
 
         if self.p1:
@@ -183,7 +183,7 @@ class Intcode():
 
 
     def op8(self):
-        """equals"""
+        """if the first parameter equal to the second parameter change the value of the thrid parameter to 1 else to 0"""
         self.parse_parameter()
 
         if self.p1:
@@ -213,7 +213,7 @@ class Intcode():
 
 
     def op_parser(self, *args):
-        """parse the instructions executing commands"""
+        """parse the instructions and execute commands"""
         self.initialize_instrucitons(*args)
 
         while self.c <= len(self.arr):  #loop with a while statement
@@ -241,7 +241,7 @@ class Intcode():
 
 
     def find_target(self, target):
-        """find the noun and verb that satisfy the conditions"""
+        """find the noun and verb that satisfy the target passed"""
 
         for noun in range(100):  # start nested loop
             for verb in range(100):
@@ -257,6 +257,6 @@ class Intcode():
 
 
     def __repr__(self):
-        """Check head of file"""
+        """print the input file as a string separated by commas"""
 
         return ", ".join([str(x) for x in self.data])
