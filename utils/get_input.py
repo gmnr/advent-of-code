@@ -7,6 +7,8 @@ Utility scritp that works with crontab to fetch the input puzzle for the current
 Crontab config:
 $  crontab -e
 $  15 10 1-25 12 * python3 $PATH/advent-of-code/utils/get_input.py > /dev/null 2>&1
+
+## UPDATE: cronjob deprecated...##
 """
 
 __author__ = 'Guido Minieri'

@@ -43,9 +43,4 @@ for year in range(2015, 2020):
         print(f"Imported input.txt @ ./{year}/{str(day).zfill(2)}")
         sleep(0.005)
 
-
-
     os.chdir(f'./..')  # go back to root folder
-
-
-
