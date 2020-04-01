@@ -9,8 +9,6 @@ __author__ = 'Guido Minieri'
 __license__ = 'GPL'
 
 
-example = "COM)B B)C C)D D)E E)F B)G G)H D)I E)J J)K K)L".split(' ')
-
 
 with open('input.txt', 'r') as f:
     data = f.read().strip().split('\n')
@@ -23,6 +21,11 @@ class Orbit:
         self.orbit = orbit
         self.direct = 1
         self.indirect = 0
+
+
+    @property
+    def total(self):
+        return self.direct + self.indirect
 
 
     def __str__(self):
@@ -82,28 +85,46 @@ class Coordinates:
             elem.indirect = elem.getIndirect()
 
 
-    @property
     def show(self):
         for orbit in self.coord:
             print(orbit)
+
 
     def checksum(self):
         return sum([elem.direct + elem.indirect for elem in self.coord])
 
 
-    def leastCommonOrbit(self, obj1, obj2):
-        pass
+    def cleanLine(self, obj):
+        arr = []
+        while obj.prev != None:
+            arr.append(obj)
+            obj = obj.prev
+        arr.append(obj)   # add last one
+        return arr[::-1]
 
+
+    def findCommonAncestor(self, obj1, obj2):
+        arr1 = self.cleanLine(obj1)
+        arr2 = self.cleanLine(obj2)
+
+        return [el for el in arr1 if el in arr2][-1]
+
+
+    def findDistance(self, obj1, obj2):
+        return obj1.total - obj2.total
+    
 
 main = Coordinates(data)
+
 
 # part 1
 # print(main.checksum())
 
-
 # part 2
 me = main.findOrbit('YOU')
 santa = main.findOrbit('SAN')
+common = main.findCommonAncestor(me, santa)
 
-print(santa.indirect)
-print(me.indirect)
+total = main.findDistance(me, common) + main.findDistance(santa, common) - 2  # 2 if to account for the fact that you need to reach the center (and not the orbit)
+print(total)
+
