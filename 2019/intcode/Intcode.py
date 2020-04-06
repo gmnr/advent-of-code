@@ -19,6 +19,7 @@ class Intcode():
         self.data = list(self.data)  # create a new list
         self.inpt = inpt  # defaults to 1
         self.diagnostic_code = []
+        self.op_parser()
 
 
     def initialize_instrucitons(self, noun=None, verb=None):
@@ -72,14 +73,14 @@ class Intcode():
         self.c += 4
 
 
-    def op3(self):
+    def op3(self, inp):
         """takes one input as parameter (the value after it) and stores it in the corresponding index 'arr[parameter]'"""
         self.parse_parameter()
 
         if self.p1:
-            self.arr[self.c + 1] = self.inpt
+            self.arr[self.c + 1] = inp
         else:
-            self.arr[self.arr[self.c + 1]] = self.inpt
+            self.arr[self.arr[self.c + 1]] = inp
 
         self.c += 2
 
@@ -223,7 +224,11 @@ class Intcode():
             if self.instr[-2:] == '02':
                 self.op2()
             if self.instr[-2:] == '03':
-                self.op3()
+                if type(self.inpt) == int:
+                    self.op3(self.inpt)
+                else:
+                    self.op3(self.inpt[0])
+                    self.inpt.pop(0)
             if self.instr[-2:] == '04':
                 self.op4()
             if self.instr[-2:] == '05':
