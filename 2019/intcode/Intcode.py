@@ -11,25 +11,24 @@ __license__ = 'GPL'
 
 class Intcode():
 
-
     def __init__(self, data, inpt=1):
         """read and format the instruction set"""
         self.data = [int(x) for x in data[:-1].strip().split(',')]
-
         self.data = list(self.data)  # create a new list
+        self.halt = False
+        self.arr = list(self.data)
         self.inpt = inpt  # defaults to 1
         self.diagnostic_code = []
         self.op_parser()
 
-
-    def initialize_instrucitons(self, noun=None, verb=None):
+    def initialize_instrucitons(self, noun=None, verb=None, reset=True):
         """Create a copy of the data, initialize noun/verb and c"""
-        self.arr = list(self.data)
 
         if noun != None and verb != None:
             self.arr[1] = noun
             self.arr[2] = verb
-        self.c = 0  # initialize cursor
+        if reset:
+            self.c = 0  # initialize cursor
 
 
     def parse_parameter(self):
@@ -213,11 +212,11 @@ class Intcode():
         self.c += 4
 
 
-    def op_parser(self, *args):
+    def op_parser(self, *args, **kwargs):
         """parse the instructions and execute commands"""
-        self.initialize_instrucitons(*args)
+        self.initialize_instrucitons(*args, **kwargs)
 
-        while self.c <= len(self.arr):  #loop with a while statement
+        while True:
             self.instr = f"{self.arr[self.c]:05d}"
             if self.instr[-2:] == '01':
                 self.op1()
@@ -227,10 +226,14 @@ class Intcode():
                 if type(self.inpt) == int:
                     self.op3(self.inpt)
                 else:
-                    self.op3(self.inpt[0])
-                    self.inpt.pop(0)
+                    if len(self.inpt) == 1:
+                        self.op3(self.inpt[0])
+                    else:
+                        self.op3(self.inpt[0])
+                        self.inpt.pop(0)
             if self.instr[-2:] == '04':
                 self.op4()
+                break
             if self.instr[-2:] == '05':
                 self.op5()
             if self.instr[-2:] == '06':
@@ -240,9 +243,17 @@ class Intcode():
             if self.instr[-2:] == '08':
                 self.op8()
             if self.instr[-2:] == '99':
+                self.halt = True
                 break
+        else:
+            print('Compute')
 
-        return self.arr[0]
+        return None
+
+    def feedback_input(self, inpt):
+        self.inpt = inpt
+        self.op_parser(reset=False)
+        return None
 
 
     def find_target(self, target):
