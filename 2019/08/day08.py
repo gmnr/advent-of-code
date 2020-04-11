@@ -9,7 +9,7 @@ __author__ = 'Guido Minieri'
 __license__ = 'GPL'
 
 
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 with open('input.txt', 'r') as f:
     data = f.read().strip()
@@ -112,6 +112,7 @@ min_pic = pic.layers[min([(i, x.findValue(0)) for i, x in enumerate(pic.layers)]
 complete_pic = pic.compose()
 print(complete_pic)
 
-message = complete_pic.decompose()
-plt.imshow(message)
-plt.show()
+# get the message and use matplotlib only on supported devices
+# message = complete_pic.decompose()
+# plt.imshow(message)
+# plt.show()
