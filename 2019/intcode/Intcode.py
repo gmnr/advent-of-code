@@ -25,7 +25,7 @@ class Intcode:
 
     def extend(self):
         """Allocate more memory"""
-        memory = [0] * 100
+        memory = [0] * 500
         self.arr += memory
 
 
@@ -39,92 +39,91 @@ class Intcode:
             idx = self.c + pos
         elif mode == 2:
             param = self.arr[self.arr[self.c + pos] + self.r]
+            idx = self.arr[self.c + pos] + self.r
         return (param, idx)
 
 
-    def op1(self, mode1, mode2):
+    def op1(self, mode1, mode2, mode3):
         """Addition"""
-        par1, idx1 = self.evaluate(mode1, 1)
-        par2, idx2 = self.evaluate(mode2, 2)
-
-        self.arr[self.arr[self.c + 3]] = par1 + par2
+        val1, idx1 = self.evaluate(mode1, 1)
+        val2, idx2 = self.evaluate(mode2, 2)
+        val3, idx3 = self.evaluate(mode3, 3)
+        self.arr[idx3] = val1 + val2
         self.c += 4
 
 
-    def op2(self, mode1, mode2):
+    def op2(self, mode1, mode2, mode3):
         """Multiplication"""
-        par1, idx1 = self.evaluate(mode1, 1)
-        par2, idx2 = self.evaluate(mode2, 2)
-
-        self.arr[self.arr[self.c + 3]] = par1 * par2
+        val1, idx1 = self.evaluate(mode1, 1)
+        val2, idx2 = self.evaluate(mode2, 2)
+        val3, idx3 = self.evaluate(mode3, 3)
+        self.arr[idx3] = val1 * val2
         self.c += 4
 
 
     def op3(self, mode1, inpt):
         """Input"""
-        par1, idx1 = self.evaluate(mode1, 1)
+        val1, idx1 = self.evaluate(mode1, 1)
         self.arr[idx1] = inpt
         self.c += 2
 
 
     def op4(self, mode1):
         """Output"""
-        par1, idx1 = self.evaluate(mode1, 1)
+        val1, idx1 = self.evaluate(mode1, 1)
         self.output = self.arr[idx1]
         self.c += 2
 
 
     def op5(self, mode1, mode2):
         """Comparison not equal zero"""
-        par1, idx1 = self.evaluate(mode1, 1)
-        par2, idx2 = self.evaluate(mode2, 2)
-
-        if par1 != 0:
-            self.c = par2
+        val1, idx1 = self.evaluate(mode1, 1)
+        val2, idx2 = self.evaluate(mode2, 2)
+        if val1 != 0:
+            self.c = val2
         else:
             self.c += 3
 
 
     def op6(self, mode1, mode2):
         """Comparison equal zero"""
-        par1, idx1 = self.evaluate(mode1, 1)
-        par2, idx2 = self.evaluate(mode2, 2)
-
-        if par1 == 0:
-            self.c = par2
+        val1, idx1 = self.evaluate(mode1, 1)
+        val2, idx2 = self.evaluate(mode2, 2)
+        if val1 == 0:
+            self.c = val2
         else:
             self.c += 3
 
 
-    def op7(self, mode1, mode2):
+    def op7(self, mode1, mode2, mode3):
         """Comparison between parameters arg1 < arg2"""
-        par1, idx1 = self.evaluate(mode1, 1)
-        par2, idx2 = self.evaluate(mode2, 2)
-
-        if par1 < par2:
-            self.arr[self.arr[self.c + 3]] = 1
+        val1, idx1 = self.evaluate(mode1, 1)
+        val2, idx2 = self.evaluate(mode2, 2)
+        val3, idx3 = self.evaluate(mode3, 3)
+        if val1 < val2:
+            self.arr[idx3] = 1
         else:
-            self.arr[self.arr[self.c + 3]] = 0
+            self.arr[idx3] = 0
         self.c += 4
 
 
-    def op8(self, mode1, mode2):
+    def op8(self, mode1, mode2, mode3):
         """Comparison between parameters arg1 == arg2"""
-        par1, idx1 = self.evaluate(mode1, 1)
-        par2, idx2 = self.evaluate(mode2, 2)
-
-        if par1 == par2:
-            self.arr[self.arr[self.c + 3]] = 1
+        val1, idx1 = self.evaluate(mode1, 1)
+        val2, idx2 = self.evaluate(mode2, 2)
+        val3, idx3 = self.evaluate(mode3, 3)
+        if val1 == val2:
+            self.arr[idx3] = 1
         else:
-            self.arr[self.arr[self.c + 3]] = 0
+            self.arr[idx3] = 0
         self.c += 4
 
 
     def op9(self, mode1):
         """Adjusts relative base"""
-        par1, idx1 = self.evaluate(mode1, 1)
-
-        self.r += par1
+        val1, idx1 = self.evaluate(mode1, 1)
+        self.r += val1
+        self.c += 2
 
 
     def parse(self, reset=True):
@@ -153,9 +152,12 @@ class Intcode:
                             self.inpt.pop(0)
                 elif op == '04':
                     self.instructions[op](self, self.p1)
-                    break
+                    if not reset:
+                        break
                 else:
                     self.instructions[op](self, self.p1)
+            elif op in ['01', '02', '07', '08']:
+                self.instructions[op](self, self.p1, self.p2, self.p3)
             else:
                 self.instructions[op](self, self.p1, self.p2)
 
@@ -175,13 +177,11 @@ class Intcode:
 
     def findTarget(self, target):
         """find the noun and verb that satisfy the target passed"""
-
         for noun in range(100):
             for verb in range(100):
                 self.arr = list(self.data)
                 self.arr[1] = noun
                 self.arr[2] = verb
-
                 self.parse()
                 if self.arr[0] == target:
                     return 100 * noun + verb
