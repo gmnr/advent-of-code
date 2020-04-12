@@ -16,10 +16,13 @@ from intcode import Intcode
 with open('input.txt', 'r') as f:
     data = f.read()
 
+data = list(data)
+data[2] = '12'
+data[4] = '2'
+data = "".join(data)
 
-solution = Intcode(data)
+intcode = Intcode(data)
+print(intcode.arr[0])
+
 target = 19690720
-
-# Print the solutions
-print(f"The solution for Part 1 is {solution.op_parser(12, 2)}")
-print(f"The solution for Part 2 is {solution.find_target(target)}")
+print(intcode.findTarget(target))
