@@ -19,7 +19,7 @@ from intcode import Intcode
 
 
 # part 1
-solution1 = Intcode(data, 1)
+solution1 = Intcode(data, 1, keep=True)
 part1 = solution1.output
 
 

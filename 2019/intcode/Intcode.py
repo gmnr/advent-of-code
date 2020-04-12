@@ -11,11 +11,12 @@ __license__ = 'GPL'
 
 class Intcode:
 
-    def __init__(self, data, inpt=1, extend=False):
+    def __init__(self, data, inpt=1, keep=False, extend=False):
         self.data = [int(x) for x in data.strip().split(',')]
         self.arr = list(self.data)
         self.halt = False
         self.inpt = inpt
+        self.keep = keep
         self.r = 0
         self.output = 0
         if extend:
@@ -152,7 +153,7 @@ class Intcode:
                             self.inpt.pop(0)
                 elif op == '04':
                     self.instructions[op](self, self.p1)
-                    if not reset:
+                    if not self.keep:
                         break
                 else:
                     self.instructions[op](self, self.p1)
