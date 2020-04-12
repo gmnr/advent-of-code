@@ -14,6 +14,7 @@ class Intcode:
     def __init__(self, data, inpt=1, extend=False):
         self.data = [int(x) for x in data.strip().split(',')]
         self.arr = list(self.data)
+        self.halt = False
         self.inpt = inpt
         self.r = 0
         self.output = 0
@@ -126,10 +127,10 @@ class Intcode:
         self.r += par1
 
 
-    def parse(self):
+    def parse(self, reset=True):
         "start the main loop that parses the instructions"
-        # if reset:
-        self.c = 0
+        if reset:
+            self.c = 0
 
         while True:
             self.instr = f"{self.arr[self.c]:05d}"
@@ -138,6 +139,7 @@ class Intcode:
             op = self.instr[-2:]
 
             if op == '99':
+                self.halt = True
                 break
             elif op in ['03', '04', '09']:
                 if op == '03':
@@ -149,6 +151,9 @@ class Intcode:
                         else:
                             self.instructions[op](self, self.p1, self.inpt[0])
                             self.inpt.pop(0)
+                elif op == '04':
+                    self.instructions[op](self, self.p1)
+                    break
                 else:
                     self.instructions[op](self, self.p1)
             else:
@@ -180,6 +185,12 @@ class Intcode:
                 self.parse()
                 if self.arr[0] == target:
                     return 100 * noun + verb
+
+
+    def feedbackInput(self, inpt):
+        self.inpt = inpt
+        self.parse(reset=False)
+
 
     def __repr__(self):
         return ",".join([str(x) for x in self.arr])
