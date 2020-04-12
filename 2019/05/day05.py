@@ -20,13 +20,10 @@ from intcode import Intcode
 
 # part 1
 solution1 = Intcode(data, 1)
-solution1.op_parser()
-part1 = solution1.get_diagnostic()
+part1 = solution1.output
 
 
 # part 2
 solution2 = Intcode(data, 5)
-solution2.op_parser()
-part2 = solution2.get_diagnostic()
-
+part2 = solution2.output
 print(f"The solution for Part 1 is {part1}\nTHe solution for Part 2 is {part2}")

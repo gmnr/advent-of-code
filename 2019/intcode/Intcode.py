@@ -69,7 +69,7 @@ class Intcode:
     def op4(self, mode1):
         """Output"""
         par1, idx1 = self.evaluate(mode1, 1)
-        self.out = self.arr[idx1]
+        self.output = self.arr[idx1]
         self.c += 2
 
 
