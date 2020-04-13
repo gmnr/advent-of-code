@@ -9,7 +9,7 @@ __author__ = 'Guido Minieri'
 __license__ = 'GPL'
 
 
-from math import degrees as d, atan2
+from math import degrees as d, atan2, sqrt
 
 
 with open('input.txt', 'r') as f:
@@ -39,30 +39,51 @@ def findSlope(tup1, tup2):
     dy = y2 - y1
     dx = x2 - x1
     slope = d(atan2(dy, dx))
-    return round((slope + 360) % 360, 1)
+    distance = sqrt(dx**2 + dy**2)
+    return ((slope + 360) % 360, distance)
 
 
 def computeDetection(lst):
+    """find the number of """
     results = {}
-
     for station in lst:
         slopes = {}
         for asteroid in lst:
             if station == asteroid:
                 continue
-            slope = (findSlope(station, asteroid) + 90) % 360  # rotate so the degree is the same
-            slopes.setdefault(slope, []).append(asteroid)
+            slope, distance = findSlope(station, asteroid)
+            slope = round((slope + 90) % 360, 1)
+            slopes.setdefault(slope, []).append((asteroid, round(distance)))
         results.update({station: slopes})
-    observables = {k: len(v) for k, v in results.items()}
-    return observables
+    return results
 
 
 def findMax(dic):
     """find the maximum value in the dictionary"""
-    return max(dic, key=dic.get)
+    obs = {k: len(v) for k, v in dic.items()}
+    return max(obs, key=obs.get)
 
-# data = ".#..#\n.....\n#####\n....#\n...##"
 
 coord = coordinates(convertToMatrix(data))
 monitor = computeDetection(coord)
-print(findMax(monitor), '-->', monitor[findMax(monitor)])
+station = findMax(monitor)
+print(station, '->', len(monitor[station]))
+
+
+# order the keys by degree and by distance
+unordered_station = monitor[station]
+fov = {}
+for k in sorted(unordered_station.keys()):
+    fov.update({k: sorted(unordered_station[k], key=lambda x: x[1])})
+
+destruction_order = []
+while True:
+    for k, v in fov.items():
+        destruction_order.append(v[0][0])
+        fov[k].pop(0)
+        continue
+    break
+
+# find the coordinates of the 200th element
+x, y = destruction_order[199]
+print(f"({x}, {y}) -> {x * 100 + y}")
