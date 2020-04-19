@@ -11,16 +11,16 @@ __license__ = 'GPL'
 
 class Intcode:
 
-    def __init__(self, data, inpt=1, keep=False, extend=False):
+    def __init__(self, data, inpt=1, once=False):
         self.data = [int(x) for x in data.strip().split(',')]
         self.arr = list(self.data)
         self.halt = False
         self.inpt = inpt
-        self.keep = keep
+        self.once = once
         self.r = 0
+        self.outputs = []
         self.output = 0
-        if extend:
-            self.extend()
+        self.extend()
         self.parse()
 
 
@@ -73,6 +73,7 @@ class Intcode:
         """Output"""
         val1, idx1 = self.evaluate(mode1, 1)
         self.output = self.arr[idx1]
+        self.outputs.append(self.output)
         self.c += 2
 
 
@@ -127,6 +128,20 @@ class Intcode:
         self.c += 2
 
 
+    def getInput(self):
+        # if feedback:
+            # return self.output
+        if type(self.inpt) == int:
+            return self.inpt
+        else:
+            if len(self.inpt) == 1:
+                return self.inpt[0]
+            else:
+                res = self.inpt[0]
+                self.inpt.pop(0)
+                return res
+
+
     def parse(self, reset=True):
         "start the main loop that parses the instructions"
         if reset:
@@ -143,17 +158,10 @@ class Intcode:
                 break
             elif op in ['03', '04', '09']:
                 if op == '03':
-                    if type(self.inpt) == int:
-                        self.instructions[op](self, self.p1, self.inpt)
-                    else:
-                        if len(self.inpt) == 1:
-                            self.instructions[op](self, self.p1, self.inpt[0])
-                        else:
-                            self.instructions[op](self, self.p1, self.inpt[0])
-                            self.inpt.pop(0)
+                    self.instructions[op](self, self.p1, self.getInput())
                 elif op == '04':
                     self.instructions[op](self, self.p1)
-                    if not self.keep:
+                    if self.once:
                         break
                 else:
                     self.instructions[op](self, self.p1)
@@ -190,6 +198,7 @@ class Intcode:
 
     def feedbackInput(self, inpt):
         self.inpt = inpt
+        self.once = True
         self.parse(reset=False)
 
 

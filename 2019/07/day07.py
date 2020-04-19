@@ -40,11 +40,11 @@ def feedback_thruster(lst):
     in_a, in_b, in_c, in_d, in_e = *lst,
 
     # initialize the variables
-    a = Intcode(data, [in_a, 0])
-    b = Intcode(data, [in_b, a.output])
-    c = Intcode(data, [in_c, b.output])
-    d = Intcode(data, [in_d, c.output])
-    e = Intcode(data, [in_e, d.output])
+    a = Intcode(data, [in_a, 0], once=True)
+    b = Intcode(data, [in_b, a.output], once=True)
+    c = Intcode(data, [in_c, b.output], once=True)
+    d = Intcode(data, [in_d, c.output], once=True)
+    e = Intcode(data, [in_e, d.output], once=True)
 
     # start the feedback loop
     while True:
