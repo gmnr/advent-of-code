@@ -11,13 +11,12 @@ __license__ = 'GPL'
 
 class Intcode:
 
-    def __init__(self, data, inpt=1, once=False, feedback=False):
+    def __init__(self, data, inpt=1, once=False):
         self.data = [int(x) for x in data.strip().split(',')]
         self.arr = list(self.data)
         self.halt = False
         self.inpt = inpt
         self.once = once  # just output once and then stop
-        self.feedback = feedback  # push output to input
         self.r = 0
         self.outputs = []
         self.output = 0
@@ -75,11 +74,6 @@ class Intcode:
         val1, idx1 = self.evaluate(mode1, 1)
         self.output = self.arr[idx1]
         self.outputs.append(self.output)
-        if self.feedback:
-            try:
-                self.inpt = self.outputs[-2]
-            except:
-                pass
         self.c += 2
 
 
