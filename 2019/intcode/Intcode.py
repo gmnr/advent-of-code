@@ -11,16 +11,17 @@ __license__ = 'GPL'
 
 class Intcode:
 
-    def __init__(self, data, inpt=1, once=False):
+    def __init__(self, data, inpt=1, once=False, feedback=False):
         self.data = [int(x) for x in data.strip().split(',')]
         self.arr = list(self.data)
         self.halt = False
         self.inpt = inpt
-        self.once = once
+        self.once = once  # just output once and then stop
+        self.feedback = feedback  # push output to input
         self.r = 0
         self.outputs = []
         self.output = 0
-        self.extend()
+        self.extend()  # allocate more memory
         self.parse()
 
 
@@ -74,6 +75,11 @@ class Intcode:
         val1, idx1 = self.evaluate(mode1, 1)
         self.output = self.arr[idx1]
         self.outputs.append(self.output)
+        if self.feedback:
+            try:
+                self.inpt = self.outputs[-2]
+            except:
+                pass
         self.c += 2
 
 
@@ -129,8 +135,7 @@ class Intcode:
 
 
     def getInput(self):
-        # if feedback:
-            # return self.output
+        """apply rules for input"""
         if type(self.inpt) == int:
             return self.inpt
         else:
@@ -143,7 +148,7 @@ class Intcode:
 
 
     def parse(self, reset=True):
-        "start the main loop that parses the instructions"
+        """start the main loop that parses the instructions"""
         if reset:
             self.c = 0
 
