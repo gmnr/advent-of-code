@@ -9,7 +9,8 @@ __author__ = 'Guido Minieri'
 __license__ = 'GPL'
 
 
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
+
 
 with open('input.txt', 'r') as f:
     data = f.read().strip()
@@ -107,12 +108,12 @@ class Picture(Layer):
 
 pic = Picture(data)
 min_pic = pic.layers[min([(i, x.findValue(0)) for i, x in enumerate(pic.layers)], key = lambda t: t[1])[0]]
-# print(min_pic.productValues(1,2))
+print(min_pic.productValues(1,2))
 
 complete_pic = pic.compose()
 print(complete_pic)
 
 # get the message and use matplotlib only on supported devices
-# message = complete_pic.decompose()
-# plt.imshow(message)
-# plt.show()
+message = complete_pic.decompose()
+plt.imshow(message)
+plt.show()
