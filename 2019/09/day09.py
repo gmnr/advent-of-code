@@ -17,8 +17,8 @@ with open('input.txt', 'r') as f:
 import sys; sys.path.append('..')
 from intcode import Intcode
 
-intcode = Intcode(data, extend=True)
+intcode = Intcode(data)
 print(intcode.output)
 
-boost = Intcode(data, inpt=2, extend=True)
+boost = Intcode(data, inpt=2)
 print(boost.output)
