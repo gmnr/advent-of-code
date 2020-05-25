@@ -22,6 +22,7 @@ class Game(Intcode):
     def __init__(self, data):
         self.out = []
         self.score = None
+        self.paddle = []
         super().__init__(data)
 
 
@@ -38,10 +39,13 @@ class Game(Intcode):
             tile = self.outputs[-1]
             self.out.append([x, y, tile])
 
+            if tile == 3:
+                self.paddle.append([x, y, tile])
+
             if tile == 4:
                 
                 try:
-                    px, py, ptile = self.findType(3)[0]
+                    px, py, ptile = self.paddle[-1]
                 except:
                     px, py, ptile = [0, 0, 0]
 
