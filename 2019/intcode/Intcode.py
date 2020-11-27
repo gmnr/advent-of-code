@@ -74,7 +74,6 @@ class Intcode:
         val1, idx1 = self.evaluate(mode1, 1)
         self.output = self.arr[idx1]
         self.outputs.append(self.output)
-        self.manipulate()
         self.c += 2
 
 
@@ -201,9 +200,6 @@ class Intcode:
         self.once = True
         self.parse(reset=False)
 
-
-    def manipulate(self):
-        pass
 
 
     def __repr__(self):
