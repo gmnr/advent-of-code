@@ -22,7 +22,7 @@ import requests
 
 
 # wait for internet connection to be restored
-sleep(12)
+sleep(3)
 
 # get the directory of the file
 abspath = os.path.abspath(__file__)
