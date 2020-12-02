@@ -21,3 +21,5 @@ for k, v in enumerate(data):
         solution2 = k + 1
         break
 
+print(solution1)
+print(solution2)
