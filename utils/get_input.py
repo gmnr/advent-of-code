@@ -31,6 +31,11 @@ if month != 12 or day > 25:
     print("There are no challanges today!")
     sys.exit()
 
+# get cookies while in the script directory
+with open('.cookie', 'r') as f:
+    cookie = f.read().strip()
+cookies = {'session': cookie}
+
 # go back to advent-of-code repository
 os.chdir('./..')
 
@@ -55,11 +60,6 @@ if os.path.exists('./input.txt'):
     print('Happy Coding!')
     sys.exit()
 
-# get cookies
-with open('.cookie', 'r') as f:
-    cookie = f.read().strip()
-cookies = {'session': cookie}
-
 # fetch data
 url = f"https://adventofcode.com/{year}/day/{day}/input"
 r = requests.get(url, cookies=cookies)
@@ -68,4 +68,21 @@ res = r.text
 # write the input puzzle in the input file
 with open('input.txt', 'w') as f:
     f.write(res)
-print(f'Data fetched: input.txt written in {year}/{day}')
+print(f'Data fetched: input.txt written in {year}/{foldername}')
+
+# define the payload (python file )
+payload = f'''#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Solution for day{foldername} {year}
+"""
+
+__author__ = 'Guido Minieri'
+__license__ = 'GPL'
+'''
+
+# write the py file in the folder
+with open(f'day{foldername}.py', 'w') as f:
+    f.write(payload)
+print(f'Python file: created template')
