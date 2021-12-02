@@ -80,6 +80,12 @@ Solution for day{foldername} {year}
 
 __author__ = 'Guido Minieri'
 __license__ = 'GPL'
+
+
+with open('input.txt', 'r') as f:
+    data = f.read()
+
+print(data)
 '''
 
 # write the py file in the folder
