@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Solution for day16 2018
+Solution for day19 2018
 """
 
 __author__ = 'Guido Minieri'
@@ -133,8 +133,8 @@ def run(instructions, pointer, reg_zero='0'):
 
 # pt 1
 pointer, *instr = parse(data)
-# res = run(instr, pointer)
-# print(res[0])
+res = run(instr, pointer)
+print(res[0])
 
 # pt 2
 a,b = map(int, [re.findall('\d+', data[i])[1] for i in [22, 24]])
