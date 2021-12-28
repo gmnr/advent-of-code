@@ -70,7 +70,7 @@ with open('input.txt', 'w') as f:
     f.write(res)
 print(f'Data fetched: input.txt written in {year}/{foldername}')
 
-# define the payload (python file )
+# define the payload (python file template)
 payload = f'''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -82,13 +82,16 @@ __author__ = 'Guido Minieri'
 __license__ = 'GPL'
 
 
-with open('input.txt', 'r') as f:
-    data = f.read()
-
-print(data)
+import helper.advent as advent
 '''
 
-# write the py file in the folder
+# write the template in the folder
 with open(f'day{foldername}.py', 'w') as f:
     f.write(payload)
 print(f'Python file: created template')
+
+# symlink the helper directory
+try:
+    os.symlink('../../helper', '.')
+except:
+    print('WARN: Could not symlink the helper library')
