@@ -15,11 +15,14 @@ __license__ = 'GPL'
 
 import re
 
-def parse(parser=str, fname='input', sep='\n') -> tuple:
+def parse(parser=str, sep='\n', fname='input', preview=0) -> tuple:
     """Parse the input data into a tuple, parser can be specified"""
     fname = f'{fname}.txt'
     text = open(fname).read()
     entries = tuple(map(parser, text.rstrip().split(sep)))
+    if preview:
+        lines = text.splitlines()
+        print(*lines[:preview], sep=sep)
     return entries
 
 def ints(text) -> tuple:
@@ -37,5 +40,15 @@ def first(iterable, default=None):
     "Return first item in iterable, or default."
     return next(iter(iterable), default)
 
-nb4 = ((0, 1), (1, 0), (0, -1), (-1, 0))               
-nb8 = ((1, 1), (1, -1), (-1, 1), (-1, -1)) + nb4
+def gen_coordinates(coord, n=4):
+    x, y = coord
+    nb = ((0, 1), (1, 0), (0, -1), (-1, 0))
+    if n == 4:
+        pass
+    elif n == 8:
+        nb = ((1, 1), (1, -1), (-1, 1), (-1, -1)) + nb
+    elif n == 9:
+        nb = ((1, 1), (1, -1), (-1, 1), (-1, -1), (0, 0)) + nb
+    else:
+        return False
+    yield from ((x + dx, y + dy) for dx, dy in nb)
