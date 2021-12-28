@@ -83,6 +83,9 @@ __license__ = 'GPL'
 
 
 import helper.advent as advent
+
+data = parse()
+print(data)
 '''
 
 # write the template in the folder
