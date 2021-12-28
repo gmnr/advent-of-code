@@ -92,6 +92,6 @@ print(f'Python file: created template')
 
 # symlink the helper directory
 try:
-    os.symlink('../../helper', '.')
+    os.symlink('../../helper', 'helper')
 except:
     print('WARN: Could not symlink the helper library')
