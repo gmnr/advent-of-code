@@ -29,11 +29,16 @@ def ints(text) -> tuple:
     """A tuple of all the integers in text, ignoring non-number characters."""
     return tuple(map(int, re.findall(r'-?[0-9]+', text)))
 
+def words(text: str) -> list:
+    """A list of all the alphabetic words in text, ignoring non-letters."""
+    return re.findall(r'[a-zA-Z]+', text)
+
 def quantity(iterable, pred=bool) -> int:
     """Count the number of items in iterable for which pred is true."""
     return sum(1 for item in iterable if pred(item))
 
 def transpose(matrix) -> list:
+    """Transpose a matrix"""
     return list(zip(*matrix))
 
 def first(iterable, default=None):
@@ -41,6 +46,7 @@ def first(iterable, default=None):
     return next(iter(iterable), default)
 
 def gen_coordinates(coord, n=4):
+    """Generate 4, 8, 9 points around the given `coord`"""
     x, y = coord
     nb = ((0, 1), (1, 0), (0, -1), (-1, 0))
     if n == 4:
