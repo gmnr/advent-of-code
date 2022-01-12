@@ -3,11 +3,6 @@
 
 """
 Helper library for advent-of-code
-Contains:
-
-    parser;
-    data structure;
-    recurring functions in the challenges
 """
 
 __author__ = 'Guido Minieri'
