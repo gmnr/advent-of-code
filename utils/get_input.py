@@ -82,9 +82,9 @@ __author__ = 'Guido Minieri'
 __license__ = 'GPL'
 
 
-import helper.advent as advent
+import helper.advent as aoc
 
-data = parse()
+data = aoc.read_input()
 print(data)
 '''
 
