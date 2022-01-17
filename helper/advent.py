@@ -10,21 +10,19 @@ __license__ = 'GPL'
 
 import re
 
-def parse(parser=str, sep='\n', fname='input', preview=0) -> tuple:
-    """Parse the input data into a tuple, parser can be specified"""
-    fname = f'{fname}.txt'
-    text = open(fname).read()
-    entries = tuple(map(parser, text.rstrip().split(sep)))
-    if preview:
-        lines = text.splitlines()
-        print(*lines[:preview], sep=sep)
-    return entries
+def read_input(src='input', parser=str, sep='\n') -> tuple:
+    """Get input from file or variable and return a tuple based on a parser function"""
+    if src == 'input':
+        text = open('input.txt').read()
+    else:
+        text = src
+    return tuple(map(parser, text.rstrip().split(sep)))
 
 def ints(text) -> tuple:
     """A tuple of all the integers in text, ignoring non-number characters."""
     return tuple(map(int, re.findall(r'-?[0-9]+', text)))
 
-def words(text: str) -> list:
+def words(text) -> list:
     """A list of all the alphabetic words in text, ignoring non-letters."""
     return re.findall(r'[a-zA-Z]+', text)
 
@@ -40,7 +38,7 @@ def first(iterable, default=None):
     "Return first item in iterable, or default."
     return next(iter(iterable), default)
 
-def gen_coordinates(coord, n=4):
+def gen_coordinates(coord, n=4) -> tuple:
     """Generate 4, 8, 9 points around the given `coord`"""
     x, y = coord
     nb = ((0, 1), (1, 0), (0, -1), (-1, 0))
