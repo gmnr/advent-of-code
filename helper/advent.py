@@ -51,3 +51,9 @@ def gen_coordinates(coord, n=4) -> tuple:
     else:
         return False
     yield from ((x + dx, y + dy) for dx, dy in nb)
+
+def manhattan_dist(a, b) -> int:
+    """Calculate manhattan distance between two points"""
+    ax, ay = a
+    bx, by = b
+    return abs(ax - bx) + abs(ay - by)
