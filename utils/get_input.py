@@ -56,8 +56,7 @@ else:
 
 # if file exists exit
 if os.path.exists("./input.txt"):
-    print("Input file has already been downloaded")
-    print("Happy Coding!")
+    print("Input file has already been downloaded. Happy Coding!")
     sys.exit()
 
 # fetch data
