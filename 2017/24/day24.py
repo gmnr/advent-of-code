@@ -5,25 +5,28 @@
 Soluton for day24 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import defaultdict as dd
 
+
 def parse_components(data):
     components = dd(set)
     for pin in data:
-        i, o = map(int, pin.split('/'))
+        i, o = map(int, pin.split("/"))
         components[i].add(o)
         components[o].add(i)
     return components
 
+
 def score_bridge(bridge):
     return sum(sum(x) for x in bridge)
+
 
 def generate_bridges(comps, bridge):
     bridge = bridge or [(0, 0)]
@@ -33,6 +36,7 @@ def generate_bridges(comps, bridge):
             next_bridge = bridge + [(c, pin)]
             yield next_bridge
             yield from generate_bridges(comps, next_bridge)
+
 
 components = parse_components(data)
 bridges = []

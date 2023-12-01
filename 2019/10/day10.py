@@ -5,20 +5,20 @@
 solution for day 10
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from math import degrees as d, atan2, sqrt
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 
 def convertToMatrix(string):
     """Convert the puzzle input into a matrix of nested list"""
-    arr = string.split('\n')
+    arr = string.split("\n")
     arr = [list(x) for x in arr]
     return arr
 
@@ -28,7 +28,7 @@ def coordinates(lst):
     res = []
     for y in range(len(lst)):
         for x in range(len(lst[y])):
-            if lst[y][x] == '#':
+            if lst[y][x] == "#":
                 res.append((x, y))
     return res
 
@@ -44,7 +44,7 @@ def findSlope(tup1, tup2):
 
 
 def computeDetection(lst):
-    """find the number of """
+    """find the number of"""
     results = {}
     for station in lst:
         slopes = {}
@@ -67,7 +67,7 @@ def findMax(dic):
 coord = coordinates(convertToMatrix(data))
 monitor = computeDetection(coord)
 station = findMax(monitor)
-print(station, '->', len(monitor[station]))
+print(station, "->", len(monitor[station]))
 
 
 # order the keys by degree and by distance

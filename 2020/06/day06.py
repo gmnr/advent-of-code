@@ -5,16 +5,17 @@
 Solution for day 06 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 import re
 
-groups = re.split('\n\n', data)
+groups = re.split("\n\n", data)
+
 
 def countAll(groups):
     counter = {}
@@ -22,12 +23,13 @@ def countAll(groups):
         counter[i] = 0
         group = groups[i]
         ans = set()
-        people = group.split('\n')
+        people = group.split("\n")
         for person in people:
             for char in person:
                 ans.add(char)
         counter[i] = len(ans)
     return sum(counter.values())
+
 
 def countExclusive(groups):
     counter = {}
@@ -35,7 +37,7 @@ def countExclusive(groups):
         counter[i] = 0
         group = groups[i]
         ans = 0
-        people = group.split('\n')
+        people = group.split("\n")
         seen = {}
         for person in people:
             for char in person:
@@ -45,6 +47,7 @@ def countExclusive(groups):
                     ans += 1
         counter[i] = ans
     return sum(counter.values())
+
 
 print(countAll(groups))
 print(countExclusive(groups))

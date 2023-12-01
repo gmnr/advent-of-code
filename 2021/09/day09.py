@@ -5,14 +5,15 @@
 Solution for day09 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from math import prod
+
 
 def parse(data):
     caves = {}
@@ -23,9 +24,11 @@ def parse(data):
 
     return caves
 
+
 def nb4(pt):
     x, y = pt
-    return [(x+dx, y+dy) for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]] 
+    return [(x + dx, y + dy) for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]]
+
 
 def find_low(caves):
     low_points = {}
@@ -39,6 +42,7 @@ def find_low(caves):
         if c_v < min(heats):
             low_points[c] = c_v
     return low_points
+
 
 def spill(c, caves):
     visited = [c]
@@ -55,6 +59,7 @@ def spill(c, caves):
                 queue.append(neigh)
     return visited
 
+
 def spill_basins(caves, low_points):
     caves = {k: v for k, v in caves.items() if v != 9}
     basins_size = []
@@ -62,6 +67,7 @@ def spill_basins(caves, low_points):
         basin = spill(c, caves)
         basins_size.append(len(basin))
     return basins_size
+
 
 caves = parse(data)
 # pt 1

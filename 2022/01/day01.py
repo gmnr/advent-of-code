@@ -5,8 +5,8 @@
 Solution for day01 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
@@ -17,13 +17,13 @@ data = aoc.read_input()
 elves = defaultdict(int)
 cnt = 0
 for i in data:
-    if i == '':
+    if i == "":
         cnt += 1
         continue
     else:
         i = int(i)
         elves[cnt] += i
-    
+
 # pt 1
 print(max(elves.values()))
 

@@ -5,14 +5,15 @@
 Solution for day13 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
 from functools import cmp_to_key
 
-data = aoc.read_input(sep='\n\n')
+data = aoc.read_input(sep="\n\n")
+
 
 def compare(l, r):
     l_int = type(l) is int
@@ -33,6 +34,7 @@ def compare(l, r):
             return res
 
     return len(l) - len(r)
+
 
 # pt 1
 cnt, pairs = 1, []

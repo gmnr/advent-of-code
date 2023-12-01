@@ -5,11 +5,12 @@
 Solution for day21 2018
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
+
 
 def run(num, pt1):
     seen = set()

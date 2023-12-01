@@ -5,18 +5,20 @@
 Solution for day 04 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()[0]
 
 from hashlib import md5
 
+
 def hash_true(word, l):
     h = md5(word.encode()).hexdigest()
-    return h[:l] == '0' * l
+    return h[:l] == "0" * l
+
 
 counter5 = 1
 while not hash_true(data + str(counter5), 5):

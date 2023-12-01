@@ -5,14 +5,15 @@
 Solution for day09 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
 from math import dist
 
 data = aoc.read_input()
+
 
 def approach(c1, c2):
     x1, y1 = c1
@@ -34,21 +35,17 @@ def approach(c1, c2):
         cross = [(x1 + dx, y1 + dy) for dx, dy in ((1, 1), (1, -1), (-1, 1), (-1, -1))]
         d = [dist(i, c2) for i in cross]
         points = list(zip(cross, d))
-        return  min(points, key=lambda x: x[1])[0]
+        return min(points, key=lambda x: x[1])[0]
 
     else:
         adj = list(aoc.gen_coordinates(c1))
         d = [dist(i, c2) for i in adj]
         points = list(zip(adj, d))
-        return  min(points, key=lambda x: x[1])[0]
+        return min(points, key=lambda x: x[1])[0]
+
 
 def move(h, t, d, is_tail=False):
-    moves = {
-            'U': (0, 1),
-            'R': (1, 0),
-            'D': (0, -1),
-            'L': (-1, 0)
-            }
+    moves = {"U": (0, 1), "R": (1, 0), "D": (0, -1), "L": (-1, 0)}
 
     if not is_tail:
         h = tuple(map(sum, zip(h, moves[d])))
@@ -57,6 +54,7 @@ def move(h, t, d, is_tail=False):
         t = approach(h, t)
 
     return h, t
+
 
 # pt 1
 tails = []
@@ -76,9 +74,9 @@ for i in data:
     for _ in range(int(s)):
         for n in range(len(nodes) - 1):
             if n == 0:
-                nodes[n], nodes[n+1] = move(nodes[n], nodes[n+1], d)
+                nodes[n], nodes[n + 1] = move(nodes[n], nodes[n + 1], d)
             else:
-                nodes[n], nodes[n+1] = move(nodes[n], nodes[n+1], d, True)
-            if n+1 == len(nodes) - 1:
-                last_tails.append(nodes[n+1])
+                nodes[n], nodes[n + 1] = move(nodes[n], nodes[n + 1], d, True)
+            if n + 1 == len(nodes) - 1:
+                last_tails.append(nodes[n + 1])
 print(len(set(last_tails)))

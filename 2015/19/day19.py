@@ -5,11 +5,11 @@
 Solution for day19 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
-with open('input.txt', 'r') as f:
-    repls, mol = f.read().split('\n\n')
+with open("input.txt", "r") as f:
+    repls, mol = f.read().split("\n\n")
 
 import re
 from random import shuffle
@@ -22,14 +22,17 @@ mol = mol.splitlines()[0]
 # mol = 'HOH'
 repls = repls.splitlines()
 
+
 def parse(data):
     repls = []
     for line in data:
-        k, v = line.split(' => ')
+        k, v = line.split(" => ")
         repls.append((k, v))
     return repls
 
+
 repls = parse(repls)
+
 
 def calibrate(mol, repl):
     i = 0
@@ -38,9 +41,10 @@ def calibrate(mol, repl):
         curr = rule[0]
         matches = [x.span() for x in re.finditer(curr, mol)]
         for m in matches:
-            new_mol = mol[:m[0]] + rule[1] + mol[m[1]:]
+            new_mol = mol[: m[0]] + rule[1] + mol[m[1] :]
             distinct.append(new_mol)
     return distinct
+
 
 def fabricate(mol, repls):
     cnt = 0
@@ -57,6 +61,7 @@ def fabricate(mol, repls):
             m = mol
             cnt = 0
     return cnt
+
 
 # pt 1
 distinct = calibrate(mol, repls)

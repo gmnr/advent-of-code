@@ -5,14 +5,15 @@
 Solution for day 15 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-    data = f.read().rstrip().split(',')
+with open("input.txt", "r") as f:
+    data = f.read().rstrip().split(",")
 
 from collections import defaultdict as dd, deque as dq
+
 
 def playGame(data, target):
     spoken = dd(lambda: dq([], maxlen=2))
@@ -28,6 +29,7 @@ def playGame(data, target):
             last = spoken[last][1] - spoken[last][0]
             spoken[last].append(val)
     return last
+
 
 # pt 1
 print(playGame(data, 2020))

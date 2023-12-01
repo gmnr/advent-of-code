@@ -5,17 +5,18 @@
 Solution for day23 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()[0]
 
 from collections import deque
 from itertools import islice, chain
 
 cups = [int(x) for x in data]
+
 
 def play(cups, turns):
     cups = deque(cups)
@@ -40,14 +41,15 @@ def play(cups, turns):
     one = cups.index(1)
     cups.rotate(-one)
     cups.popleft()
-    return "".join(map(str,cups))
+    return "".join(map(str, cups))
+
 
 class Cup:
-
     def __init__(self, value):
         self.value = value
         self.prev = None
         self.next = None
+
 
 def build_list(start):
     values = chain(start, range(10, 1_000_000 + 1))
@@ -67,6 +69,7 @@ def build_list(start):
     cur.next = first
     return first, cups
 
+
 def play_class(cur, cups, moves):
     high = len(cups) - 1
 
@@ -80,7 +83,7 @@ def play_class(cur, cups, moves):
         if cur.value == 1:
             d = high
         else:
-            d = cur.value -1
+            d = cur.value - 1
 
         while d in pick:
             if d == 1:
@@ -95,6 +98,7 @@ def play_class(cur, cups, moves):
         cur = cur.next
 
     return cups[1].next.value * cups[1].next.next.value
+
 
 # pt 1
 print(play(cups, 100))

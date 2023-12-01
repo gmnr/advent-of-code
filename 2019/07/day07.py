@@ -5,28 +5,31 @@
 solution for day07 2019
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 # get data
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 
-import sys; sys.path.append('..')
+import sys
+
+sys.path.append("..")
 from intcode import Intcode
 from itertools import permutations
 
 
-phase_poss = permutations([0,1,2,3,4])
-feedback_poss = permutations([5,6,7,8,9])
+phase_poss = permutations([0, 1, 2, 3, 4])
+feedback_poss = permutations([5, 6, 7, 8, 9])
 
 results = {}
 results_feedback = {}
 
+
 def compute_thrusters(lst):
-    in_a, in_b, in_c, in_d, in_e = *lst,
+    in_a, in_b, in_c, in_d, in_e = (*lst,)
     a = Intcode(data, [in_a, 0])
     b = Intcode(data, [in_b, a.output])
     c = Intcode(data, [in_c, b.output])
@@ -35,9 +38,10 @@ def compute_thrusters(lst):
     e = e.output
 
     return e
-    
+
+
 def feedback_thruster(lst):
-    in_a, in_b, in_c, in_d, in_e = *lst,
+    in_a, in_b, in_c, in_d, in_e = (*lst,)
 
     # initialize the variables
     a = Intcode(data, [in_a, 0], once=True)
@@ -68,7 +72,7 @@ max_phase = max(results, key=results.get)
 max_thrust = results[max_phase]
 print(f"{max_phase} --> {max_thrust}")
 
-print("-"*20)
+print("-" * 20)
 
 for fee in feedback_poss:
     results_feedback.update({"".join([str(x) for x in fee]): feedback_thruster(fee)})

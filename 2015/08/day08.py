@@ -5,16 +5,18 @@
 Solution for day08 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
+
 def encode(string):
-    encoded = string.replace('\\', r'\\').replace('"', '\\"')
+    encoded = string.replace("\\", r"\\").replace('"', '\\"')
     return '"' + encoded + '"'
+
 
 enc = []
 lit = []

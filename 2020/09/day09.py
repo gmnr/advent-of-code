@@ -5,26 +5,28 @@
 Solution for day 09 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from itertools import permutations as perm
 
 data = [int(x) for x in data]
 
+
 def sumPerm(lst):
     perms = perm(lst, 2)
     return [sum(x) for x in perms]
+
 
 offset = 25
 for i in range(len(data)):
     if i < offset:
         continue
-    preamble = data[i-offset: i]
+    preamble = data[i - offset : i]
     perms = sumPerm(preamble)
     if data[i] not in perms:
         target = data[i]

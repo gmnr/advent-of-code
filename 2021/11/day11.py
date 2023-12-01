@@ -5,12 +5,13 @@
 Solution for day11 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
+
 
 def parse(data):
     octopuses = {}
@@ -19,9 +20,23 @@ def parse(data):
             octopuses[x, y] = int(lvl)
     return octopuses
 
+
 def nb8(coord):
     x, y = coord
-    return [(x + dx, y + dy) for dx, dy in [(1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1)]]
+    return [
+        (x + dx, y + dy)
+        for dx, dy in [
+            (1, 0),
+            (1, -1),
+            (0, -1),
+            (-1, -1),
+            (-1, 0),
+            (-1, 1),
+            (0, 1),
+            (1, 1),
+        ]
+    ]
+
 
 def turn(data):
     for k, v in data.items():
@@ -46,6 +61,7 @@ def turn(data):
             data[k] = 0
 
     return data
+
 
 # pt 1
 oct = parse(data)

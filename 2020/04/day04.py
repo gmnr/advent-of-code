@@ -5,11 +5,11 @@
 Solution for day 4 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 
@@ -21,15 +21,14 @@ data = re.split(blank, data)
 
 
 class Passports:
-
     def __init__(self, data):
         self.passports = [Document.fromString(x) for x in data]
 
     def valids(self):
         return sum(x.valid() for x in self.passports)
 
-class Document:
 
+class Document:
     def __init__(self, birth, issue, exp, height, hair, eye, p_id, c_id):
         self.birth = birth
         self.issue = issue
@@ -65,7 +64,7 @@ class Document:
         elif field == "hgt":
             val = value[0:-2]
             dim = value[-2:]
-            if dim == 'in':
+            if dim == "in":
                 val = int(val)
                 if val in range(59, 77):
                     return str(val) + dim
@@ -100,16 +99,17 @@ class Document:
             "hcl": False,
             "ecl": False,
             "pid": False,
-            "cid": "Invalid"
+            "cid": "Invalid",
         }
 
         for char in characteristics:
-            ch, value = char.split(':')
-            c[ch] = cls.validateField(ch, value)   # apply function for pt 2
+            ch, value = char.split(":")
+            c[ch] = cls.validateField(ch, value)  # apply function for pt 2
             # c[ch] = value   # uncomment for soluton of pt. 1
 
-        params = [v for k,v in c.items()]
+        params = [v for k, v in c.items()]
         return cls(*params)
+
 
 pas = Passports(data)
 print(pas.valids())

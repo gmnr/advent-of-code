@@ -5,11 +5,11 @@
 Solution for day 12 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import defaultdict as dd
@@ -22,6 +22,7 @@ for rule in data:
     conn = [int(x) for x in conn.split(", ")]
     groups[prg] = conn
 
+
 def countGroup(target, seen=[]):
     for i in groups[target]:
         if i in seen:
@@ -30,6 +31,7 @@ def countGroup(target, seen=[]):
             seen.append(i)
             countGroup(i, seen)
     return len(seen)
+
 
 # pt 1
 print(countGroup(0))

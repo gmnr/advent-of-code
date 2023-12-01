@@ -5,17 +5,18 @@
 Solution for day09 2018
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 import re
 from collections import deque, defaultdict as dd
 
-pls, turns = [int(x) for x in re.findall(r'(\d+)', data)]
+pls, turns = [int(x) for x in re.findall(r"(\d+)", data)]
+
 
 def game(players, turns):
     scores = dd(int)
@@ -31,6 +32,7 @@ def game(players, turns):
             marbles.append(marble)
 
     return max(scores.values())
+
 
 # pt1
 print(game(pls, turns))

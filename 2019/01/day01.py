@@ -5,13 +5,13 @@
 solution for the first day of the advent of code
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 # get data
-with open('input.txt', 'r') as f:
-    data = f.read().split('\n')[:-1]   # remove the last item which is an empty string
+with open("input.txt", "r") as f:
+    data = f.read().split("\n")[:-1]  # remove the last item which is an empty string
 
 from math import floor
 
@@ -35,9 +35,9 @@ def recursive_fuel(mass):
     if mass <= 0:
         return 0
     else:
-        return mass + recursive_fuel(floor(mass / 3) - 2) 
+        return mass + recursive_fuel(floor(mass / 3) - 2)
+
 
 # apply the funciton
 new_fuel_req = sum([recursive_fuel(x) - x for x in mass])
 print(new_fuel_req)
-

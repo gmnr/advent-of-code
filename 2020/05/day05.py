@@ -5,16 +5,17 @@
 Solution for day 5 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-    data = f.read().split('\n')[:-1]
+with open("input.txt", "r") as f:
+    data = f.read().split("\n")[:-1]
 
 
 def getSeatID(r, c):
     return r * 8 + c
+
 
 def parseBinary(string):
     rows = string[:7]
@@ -24,17 +25,17 @@ def parseBinary(string):
     col_range = list(range(8))
 
     for rw in rows:
-        if rw == 'F':
-            row_range = row_range[:int(len(row_range) / 2)]
+        if rw == "F":
+            row_range = row_range[: int(len(row_range) / 2)]
         else:
-            row_range = row_range[int(len(row_range) / 2):]
+            row_range = row_range[int(len(row_range) / 2) :]
     row = row_range[0]
 
     for cl in cols:
-        if cl == 'L':
-            col_range = col_range[:int(len(col_range) / 2)]
+        if cl == "L":
+            col_range = col_range[: int(len(col_range) / 2)]
         else:
-            col_range = col_range[int(len(col_range) / 2):]
+            col_range = col_range[int(len(col_range) / 2) :]
 
     col = col_range[0]
     return (row, col)

@@ -5,11 +5,11 @@
 Solution for day21 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = [int(x[-1]) for x in f.read().splitlines()]
 
 from itertools import cycle, product
@@ -30,8 +30,10 @@ while True:
         i += next(die)
 
     new_p = p + i
-    if new_p > 10: new_p = new_p % 10
-    if new_p == 0: new_p = 10
+    if new_p > 10:
+        new_p = new_p % 10
+    if new_p == 0:
+        new_p = 10
     s += new_p
     players[turn][0] = new_p
     players[turn][1] = s
@@ -41,17 +43,20 @@ while True:
         rolls += 3
         break
 
-    if turn == 0: turn += 1
-    else: turn  = 0
+    if turn == 0:
+        turn += 1
+    else:
+        turn = 0
     rolls += 3
 
 # pt 1
 print(rolls * players[0][1])
 
+
 # pt 2
 def quantum_turn(game):
     wins_1 = wins_2 = 0
-    new_game = defaultdict(int) 
+    new_game = defaultdict(int)
 
     for key, n in game.items():
         pos_1, pos_2, score_1, score_2, turn = key
@@ -83,6 +88,7 @@ def quantum_turn(game):
                     new_game[pos_1, pos_new_2, score_1, score_new_2, 0] += n
 
     return new_game, wins_1, wins_2
+
 
 all_rolls = tuple(map(sum, product(range(1, 4), range(1, 4), range(1, 4))))
 game = defaultdict(int, {(pos_1, pos_2, 0, 0, 0): 1})

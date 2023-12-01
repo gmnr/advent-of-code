@@ -5,14 +5,13 @@
 Intcode Main Class - refactored
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 class Intcode:
-
     def __init__(self, data, inpt=1, once=False):
-        self.data = [int(x) for x in data.strip().split(',')]
+        self.data = [int(x) for x in data.strip().split(",")]
         self.arr = list(self.data)
         self.halt = False
         self.inpt = inpt
@@ -139,33 +138,33 @@ class Intcode:
             self.p3, self.p2, self.p1 = [int(x) for x in self.instr[:3]]
 
             op = self.instr[-2:]
-            if op == '99':
+            if op == "99":
                 self.halt = True
                 break
-            elif op in ['03', '04', '09']:
-                if op == '03':
+            elif op in ["03", "04", "09"]:
+                if op == "03":
                     self.instructions[op](self, self.p1, self.getInput())
-                elif op == '04':
+                elif op == "04":
                     self.instructions[op](self, self.p1)
                     if self.once:
                         break
                 else:
                     self.instructions[op](self, self.p1)
-            elif op in ['01', '02', '07', '08']:
+            elif op in ["01", "02", "07", "08"]:
                 self.instructions[op](self, self.p1, self.p2, self.p3)
             else:
                 self.instructions[op](self, self.p1, self.p2)
 
     instructions = {
-            "01": op1,
-            "02": op2,
-            "03": op3,
-            "04": op4,
-            "05": op5,
-            "06": op6,
-            "07": op7,
-            "08": op8,
-            "09": op9
+        "01": op1,
+        "02": op2,
+        "03": op3,
+        "04": op4,
+        "05": op5,
+        "06": op6,
+        "07": op7,
+        "08": op8,
+        "09": op9,
     }
 
     def findTarget(self, target):

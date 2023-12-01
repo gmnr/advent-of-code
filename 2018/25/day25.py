@@ -5,20 +5,23 @@
 Solution for day25 2018
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import defaultdict
 
+
 def parse(data):
-    return [tuple(map(int, l.split(','))) for l in data]
+    return [tuple(map(int, l.split(","))) for l in data]
+
 
 def manhattan(a, b):
-    return sum(abs(p1-p2) for p1, p2 in zip(a, b))
+    return sum(abs(p1 - p2) for p1, p2 in zip(a, b))
+
 
 def build(coords):
     relations = defaultdict(list)
@@ -31,6 +34,7 @@ def build(coords):
         if c1 not in relations.keys():
             relations[c1] = []
     return relations
+
 
 def link(nodes):
     constellations = []
@@ -53,6 +57,7 @@ def link(nodes):
             del nodes[i]
 
     return len(constellations)
+
 
 # pt 1
 nodes = build(parse(data))

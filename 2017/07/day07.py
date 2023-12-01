@@ -5,19 +5,19 @@
 Solution for day07 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-    data = f.read().split('\n')[:-1]
+with open("input.txt", "r") as f:
+    data = f.read().split("\n")[:-1]
 
 import re
 from collections import defaultdict
 from functools import reduce
 
-class Program:
 
+class Program:
     def __init__(self, name, value, upstream):
         self.name = name
         self.value = value
@@ -27,21 +27,21 @@ class Program:
     @classmethod
     def fromString(cls, string):
         try:
-            prg, components = string.split(' -> ')
-            components = components.split(', ')
+            prg, components = string.split(" -> ")
+            components = components.split(", ")
         except:
             prg = string
             components = []
-        name, qnt = prg.split(' ')
-        match = re.search(r'\d+', qnt)
+        name, qnt = prg.split(" ")
+        match = re.search(r"\d+", qnt)
         qnt = int(match.group(0))
         return cls(name, qnt, components)
 
     def __repr__(self):
         return self.name
 
-class Tower:
 
+class Tower:
     def __init__(self, data):
         self.tower = defaultdict(object)
         for prg in data:
@@ -82,7 +82,13 @@ class Tower:
             return obj.weight
 
     def compose(self):
-        return {k: v.weight for k, v in sorted(self.tower.items(), key=lambda item: item[1].weight, reverse=True)}
+        return {
+            k: v.weight
+            for k, v in sorted(
+                self.tower.items(), key=lambda item: item[1].weight, reverse=True
+            )
+        }
+
 
 def findDiff(dct):
     values = [(k, v) for k, v in dct.items()]
@@ -90,7 +96,7 @@ def findDiff(dct):
     for i in range(len(values)):
         try:
             if values[i][1] != values[i - 1][1] and values[i][1] != values[i + 1][1]:
-                diff.append((values[i], values[i+1]))
+                diff.append((values[i], values[i + 1]))
         except:
             continue
     return diff[-1]
@@ -98,7 +104,7 @@ def findDiff(dct):
 
 def printOrder(dct):
     for k, v in dct.items():
-        print(k, ' -> ', v)
+        print(k, " -> ", v)
 
 
 tower = Tower(data)
@@ -112,4 +118,3 @@ unbal = findDiff(res)
 off = tower.findNode(unbal[0][0]).value
 difference = reduce(lambda x, y: x[1] - y[1], unbal)
 print(off - difference)
-

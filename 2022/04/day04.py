@@ -5,22 +5,23 @@
 Solution for day04 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
 
 data = aoc.read_input()
 
+
 def pair_ranges(data):
     contained = 0
     overlap = 0
     for i in data:
-        p1, p2 = i.split(',')
+        p1, p2 = i.split(",")
 
-        p1_l, p1_u = map(int, p1.split('-'))
-        p2_l, p2_u = map(int, p2.split('-'))
+        p1_l, p1_u = map(int, p1.split("-"))
+        p2_l, p2_u = map(int, p2.split("-"))
 
         r1 = range(p1_l, p1_u + 1)
         r2 = range(p2_l, p2_u + 1)
@@ -35,6 +36,7 @@ def pair_ranges(data):
             overlap += 1
 
     return contained, overlap
+
 
 contained, overlap = pair_ranges(data)
 

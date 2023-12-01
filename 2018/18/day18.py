@@ -5,14 +5,15 @@
 Solution for day18 2018
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import Counter, defaultdict as dd
+
 
 def parse(data):
     acres = {}
@@ -21,6 +22,7 @@ def parse(data):
             acres[(x, y)] = data[y][x]
     return acres
 
+
 def tick(acres):
     new_acres = {}
 
@@ -28,18 +30,23 @@ def tick(acres):
         adjacents = adjacent(coord)
         adjacents = [acres[x] for x in adjacents if x in acres]
 
-        if acres[coord] == '.' and len([x for x in adjacents if x == '|']) >= 3:
-            new_acres[coord] = '|'
-        elif acres[coord] == '|' and len([x for x in adjacents if x == '#']) >= 3:
-            new_acres[coord] = '#'
-        elif acres[coord] == '#':
-            if acres[coord] == '#' and len([x for x in adjacents if x == '#']) >= 1 and len([x for x in adjacents if x == '|']) >= 1:
-                new_acres[coord] = '#'
+        if acres[coord] == "." and len([x for x in adjacents if x == "|"]) >= 3:
+            new_acres[coord] = "|"
+        elif acres[coord] == "|" and len([x for x in adjacents if x == "#"]) >= 3:
+            new_acres[coord] = "#"
+        elif acres[coord] == "#":
+            if (
+                acres[coord] == "#"
+                and len([x for x in adjacents if x == "#"]) >= 1
+                and len([x for x in adjacents if x == "|"]) >= 1
+            ):
+                new_acres[coord] = "#"
             else:
-                new_acres[coord] = '.'
+                new_acres[coord] = "."
         else:
             new_acres[coord] = acres[coord]
     return new_acres
+
 
 def adjacent(coord):
     x, y = coord
@@ -51,12 +58,13 @@ def adjacent(coord):
         (x - 1, y - 1),
         (x - 1, y + 1),
         (x + 1, y - 1),
-        (x + 1, y + 1)
+        (x + 1, y + 1),
     )
+
 
 def score(acres):
     nums = Counter(acres.values())
-    nums = [v for k,v in nums.items() if k != '.']
+    nums = [v for k, v in nums.items() if k != "."]
     return nums[0] * nums[1]
 
 

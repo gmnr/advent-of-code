@@ -5,11 +5,11 @@
 Solution for day15 2018
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 import enum
@@ -18,7 +18,8 @@ from dataclasses import dataclass
 from itertools import count
 from collections import deque as dq
 
-class Pt(NamedTuple('Pt', [('x', int), ('y', int)])):
+
+class Pt(NamedTuple("Pt", [("x", int), ("y", int)])):
     def __add__(self, other):
         return type(self)(self.x + other.x, self.y + other.y)
 
@@ -26,9 +27,11 @@ class Pt(NamedTuple('Pt', [('x', int), ('y', int)])):
     def nb4(self):
         return [self + d for d in [Pt(0, 1), Pt(1, 0), Pt(0, -1), Pt(-1, 0)]]
 
+
 class Team(enum.Enum):
     ELF = enum.auto()
     GOBLIN = enum.auto()
+
 
 @dataclass
 class Unit:
@@ -38,8 +41,10 @@ class Unit:
     alive: bool = True
     att: int = 3
 
+
 class ElfDied(Exception):
     pass
+
 
 class Grid(dict):
     def __init__(self, lines, att=3):
@@ -49,14 +54,16 @@ class Grid(dict):
 
         for i, line in enumerate(lines):
             for j, el in enumerate(line):
-                self[Pt(i, j)] = el == '#'
+                self[Pt(i, j)] = el == "#"
 
-                if el in 'EG':
-                    self.units.append(Unit(
-                        team={'E': Team.ELF, 'G': Team.GOBLIN}[el],
-                        pos=Pt(i, j),
-                        att={'E': att, 'G': 3}[el]
-                    ))
+                if el in "EG":
+                    self.units.append(
+                        Unit(
+                            team={"E": Team.ELF, "G": Team.GOBLIN}[el],
+                            pos=Pt(i, j),
+                            att={"E": att, "G": 3}[el],
+                        )
+                    )
 
     def play(self, elf_d=False):
         rounds = 0
@@ -73,13 +80,20 @@ class Grid(dict):
                     return True
 
     def move(self, unit, elf_d=False):
-        targets = [target for target in self.units if unit.team != target.team and target.alive]
+        targets = [
+            target for target in self.units if unit.team != target.team and target.alive
+        ]
         occupied = set(u2.pos for u2 in self.units if u2.alive and unit != u2)
 
         if not targets:
             return True
 
-        in_range = set(pt for target in targets for pt in target.pos.nb4 if not self[pt] and pt not in occupied)
+        in_range = set(
+            pt
+            for target in targets
+            for pt in target.pos.nb4
+            if not self[pt] and pt not in occupied
+        )
 
         if not unit.pos in in_range:
             move = self.find_move(unit.pos, in_range)
@@ -119,7 +133,9 @@ class Grid(dict):
             seen.add(pos)
 
         try:
-            min_dist, closest = min((dist, pos) for pos, (dist, parent) in meta.items() if pos in targets)
+            min_dist, closest = min(
+                (dist, pos) for pos, (dist, parent) in meta.items() if pos in targets
+            )
         except ValueError:
             return
 
@@ -127,6 +143,7 @@ class Grid(dict):
             closest = meta[closest][1]
 
         return closest
+
 
 grid = Grid(data)
 print(grid.play())

@@ -5,11 +5,11 @@
 Soluton for day17 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from itertools import combinations
@@ -17,6 +17,7 @@ from collections import defaultdict as dd
 
 eggnog = 150
 containers = [int(x) for x in data]
+
 
 def solve(containers, lim):
     sol = dd(int)
@@ -28,6 +29,7 @@ def solve(containers, lim):
             if x == lim:
                 sol[i] += 1
     return sol
+
 
 # pt 1
 sol = solve(containers, eggnog)

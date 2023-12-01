@@ -5,26 +5,29 @@
 Solution for day15 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import defaultdict
 import heapq
 
+
 def parse(data):
     maze = {}
     for y, line in enumerate(data):
         for x, val in enumerate(line):
-            maze[x,y] = val
+            maze[x, y] = val
     return maze
+
 
 def nb4(coord):
     x, y = coord
-    return [(x+dx, y+dy) for dx, dy in [(1,0), (-1,0), (0,1), (0,-1)]]
+    return [(x + dx, y + dy) for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]]
+
 
 def dijkstra(maze, start, end):
     queue = [(0, start)]
@@ -50,6 +53,7 @@ def dijkstra(maze, start, end):
                 heapq.heappush(queue, (new_dist, n))
     return None
 
+
 def build_new(maze, tile_size):
     new_maze = {}
     tx, ty = tile_size
@@ -61,13 +65,14 @@ def build_new(maze, tile_size):
                 x, y = k
                 new_x = x + off_x
                 new_y = y + off_y
-                new_val = int(v) + i +  j
+                new_val = int(v) + i + j
                 if new_val > 9:
                     new_val = new_val % 9
                 new_maze[new_x, new_y] = new_val
             off_x += tx + 1
         off_y += ty + 1
     return new_maze
+
 
 # pt 1
 maze = parse(data)

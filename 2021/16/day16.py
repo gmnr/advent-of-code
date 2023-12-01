@@ -5,48 +5,49 @@
 Solution for day16 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-   data = f.read().strip()
+with open("input.txt", "r") as f:
+    data = f.read().strip()
 
 from math import prod
 
 to_bits = {
-        '0': '0000',
-        '1': '0001',
-        '2': '0010',
-        '3': '0011',
-        '4': '0100',
-        '5': '0101',
-        '6': '0110',
-        '7': '0111',
-        '8': '1000',
-        '9': '1001',
-        'A': '1010',
-        'B': '1011',
-        'C': '1100',
-        'D': '1101',
-        'E': '1110',
-        'F': '1111'
+    "0": "0000",
+    "1": "0001",
+    "2": "0010",
+    "3": "0011",
+    "4": "0100",
+    "5": "0101",
+    "6": "0110",
+    "7": "0111",
+    "8": "1000",
+    "9": "1001",
+    "A": "1010",
+    "B": "1011",
+    "C": "1100",
+    "D": "1101",
+    "E": "1110",
+    "F": "1111",
 }
 
+
 def read_stream(data):
-    s = ''
+    s = ""
     for c in data:
         s += to_bits[c]
     return s
 
-class Packet:
 
+class Packet:
     def __init__(self, data):
         self.bits = data
         self.c = 0
 
     def read(self, n):
-        seg = self.bits[self.c:self.c+n]
+        seg = self.bits[self.c : self.c + n]
         self.c += n
         return seg
 
@@ -57,13 +58,14 @@ class Packet:
         return ver, typ, dat
 
     def packet_content(self, typ):
-        if typ == 4: return self.value()
+        if typ == 4:
+            return self.value()
         return self.operator()
 
     def value(self):
-        val = ''
+        val = ""
         group = self.read(5)
-        while group[0] != '0':
+        while group[0] != "0":
             val += group[1:]
             group = self.read(5)
         val += group[1:]
@@ -71,7 +73,8 @@ class Packet:
 
     def operator(self):
         length = int(self.read(1), 2)
-        if length == 1: return self.n_sub(self.read(11))
+        if length == 1:
+            return self.n_sub(self.read(11))
         return self.len_sub(self.read(15))
 
     def n_sub(self, n):
@@ -85,27 +88,37 @@ class Packet:
             packets.append(self.parse())
         return packets
 
+
 def sum_ver(p):
     ver, typ, dat = p
     if typ == 4:
         return ver
     return ver + sum(map(sum_ver, dat))
 
+
 def calculate(p):
     ver, typ, dat = p
 
-    if typ == 4: return dat
+    if typ == 4:
+        return dat
 
     val = map(calculate, dat)
 
-    if typ == 0: return sum(val)
-    if typ == 1: return prod(val)
-    if typ == 2: return min(val)
-    if typ == 3: return max(val)
+    if typ == 0:
+        return sum(val)
+    if typ == 1:
+        return prod(val)
+    if typ == 2:
+        return min(val)
+    if typ == 3:
+        return max(val)
     a, b = val
-    if typ == 5: return int(a > b)
-    if typ == 6: return int(a < b)
+    if typ == 5:
+        return int(a > b)
+    if typ == 6:
+        return int(a < b)
     return int(a == b)
+
 
 # pt 1
 data = read_stream(data)

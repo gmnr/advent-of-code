@@ -5,35 +5,38 @@
 Solution for day10 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().rstrip()
+
 
 def find_adj(s):
     res = []
-    wip = ''
+    wip = ""
     for i in range(len(s) - 1):
-        if s[i] != s[i+1]:
+        if s[i] != s[i + 1]:
             if i == 0:
                 res.append(s[i])
             else:
                 wip += s[i]
                 res.append(wip)
-                wip = ''
+                wip = ""
         else:
             wip += s[i]
     wip += s[-1]
     res.append(wip)
     return res
 
+
 def look_say(comp):
-    res = ''
+    res = ""
     for el in comp:
         res += str(len(el)) + el[0]
     return res
+
 
 data1 = data
 data2 = data

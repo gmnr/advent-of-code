@@ -5,15 +5,16 @@
 Solution for day23 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import defaultdict as dd
 from math import sqrt
+
 
 def parse_line(line):
     line = line.split()
@@ -23,9 +24,10 @@ def parse_line(line):
     else:
         return (instr, reg, val)
 
+
 def run(data, pt2=False):
     c = 0
-    regs = {v: 0 for v in 'abcdefgh'}
+    regs = {v: 0 for v in "abcdefgh"}
     mul_invoc = 0
 
     while c < len(data):
@@ -33,11 +35,11 @@ def run(data, pt2=False):
         instr, reg, val = program[0], program[1], program[-1]
         val = val if isinstance(val, int) else regs[val]
 
-        if instr == 'set':
+        if instr == "set":
             regs[reg] = val
-        elif instr == 'sub':
+        elif instr == "sub":
             regs[reg] -= val
-        elif instr == 'mul':
+        elif instr == "mul":
             regs[reg] = regs[reg] * val
             mul_invoc += 1
         else:
@@ -48,6 +50,7 @@ def run(data, pt2=False):
         c += 1
 
     return mul_invoc
+
 
 def prime(n):
     if n == 2:
@@ -62,6 +65,7 @@ def prime(n):
             return False
     return True
 
+
 # pt1
 print(run(data))
 # pt2
@@ -70,6 +74,6 @@ reg_c = 126900
 reg_h = 0
 
 for reg_b in range(109900, reg_c + 1, 17):
-        if not prime(reg_b):
-                    reg_h += 1
+    if not prime(reg_b):
+        reg_h += 1
 print(reg_h)

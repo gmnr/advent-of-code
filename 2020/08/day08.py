@@ -5,14 +5,15 @@
 Solution for day 08 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import defaultdict as dd
+
 
 def solveStop(data, beforeloop=False):
     seen = dd(int)
@@ -36,6 +37,7 @@ def solveStop(data, beforeloop=False):
     if broken and not beforeloop:
         return "looped"
     return acc
+
 
 def howMany(data):
     count = 0
@@ -63,7 +65,7 @@ def bruteForce(data):
         new_data += data[:idx]
         for inst in data[idx:]:
             cmd, val = inst.split()
-            if cmd == 'acc':
+            if cmd == "acc":
                 idx += 1
                 new_data.append(inst)
             else:
@@ -77,6 +79,7 @@ def bruteForce(data):
                     break
                 else:
                     return val
+
 
 # pt 1
 print(solveStop(data, True))

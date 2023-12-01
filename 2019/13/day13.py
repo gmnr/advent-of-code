@@ -5,32 +5,31 @@
 solution for day 13 2019
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-import sys; sys.path.append('..')
+import sys
+
+sys.path.append("..")
 from intcode import Intcode
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 
 class Game(Intcode):
-
     def __init__(self, data):
         self.out = []
         self.score = None
         self.paddle = []
         super().__init__(data)
 
-
     def extend(self):
         memory = [0] * 500
         self.arr += memory
         self.arr[0] = 2
-
 
     def manipulate(self):
         if len(self.outputs) % 3 == 0 and self.outputs != []:
@@ -43,7 +42,6 @@ class Game(Intcode):
                 self.paddle.append([x, y, tile])
 
             if tile == 4:
-                
                 try:
                     px, py, ptile = self.paddle[-1]
                 except:
@@ -59,16 +57,13 @@ class Game(Intcode):
             if x == -1 and y == 0:  # capture the score of the game
                 self.score = tile
 
-
     def findType(self, tileId):
         res = [x for x in self.out[::-1] if x[2] == tileId]
         return res
 
-    
     def numBlocks(self):
         listBlocks = self.findType(2)
         return len(listBlocks)
-
 
     conv = {0: " ", 1: "W", 2: "x", 3: "=", 4: "O"}
 
@@ -76,4 +71,3 @@ class Game(Intcode):
 arcade = Game(data)
 print(arcade.numBlocks())
 print(arcade.score)
-

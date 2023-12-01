@@ -5,22 +5,23 @@
 Solution for day12 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
 from string import ascii_lowercase as ascii
 
 data = aoc.read_input()
-area = [[ascii.find(i) if x not in ['S', 'E'] else i for i in x] for x in data]
+area = [[ascii.find(i) if x not in ["S", "E"] else i for i in x] for x in data]
 
 for y, l in enumerate(data):
     for x, i in enumerate(l):
-        if i == 'S':
+        if i == "S":
             start = (x, y)
-        elif i == 'E':
+        elif i == "E":
             end = (x, y)
+
 
 def gen_height(area, node):
     coord = aoc.gen_coordinates(node)
@@ -39,13 +40,14 @@ def gen_height(area, node):
 
         c_value = abs(area[cy][cx])
 
-        if c_value == 'E':
+        if c_value == "E":
             yield c
 
         if c_value - node_value > 1:
             continue
 
         yield c
+
 
 def traverse(area, start, end):
     queue = [(0, start)]
@@ -64,7 +66,8 @@ def traverse(area, start, end):
                 if n in visited:
                     continue
 
-                queue.append((dist+1, n))
+                queue.append((dist + 1, n))
+
 
 # pt 1
 print(traverse(area, start, end))
@@ -73,7 +76,7 @@ print(traverse(area, start, end))
 all_a = []
 for y, l in enumerate(data):
     for x, i in enumerate(l):
-        if i == 'a':
+        if i == "a":
             all_a.append((x, y))
 
 all_dist = [traverse(area, x, end) for x in all_a]

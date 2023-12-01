@@ -5,13 +5,14 @@
 Solution for day12 2016
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from helper import advent as aoc
 
 data = aoc.read_input()
+
 
 def read(v, regs):
     try:
@@ -19,11 +20,12 @@ def read(v, regs):
     except:
         return regs[v]
 
+
 def parse(data, pt2=False):
-    regs = {'a': 0, 'b': 0, 'c':0, 'd':0}
+    regs = {"a": 0, "b": 0, "c": 0, "d": 0}
 
     if pt2:
-        regs['c'] = 1
+        regs["c"] = 1
 
     c = 0
 
@@ -31,14 +33,14 @@ def parse(data, pt2=False):
         instr = data[c]
         cmd, *args = instr.split()
 
-        if cmd.startswith('inc'):
+        if cmd.startswith("inc"):
             regs[args[0]] += 1
-        elif cmd.startswith('dec'):
+        elif cmd.startswith("dec"):
             regs[args[0]] -= 1
-        elif cmd.startswith('cpy'):
+        elif cmd.startswith("cpy"):
             out, dest = args
             regs[dest] = read(out, regs)
-        elif cmd.startswith('jnz'):
+        elif cmd.startswith("jnz"):
             check, dist = args
             if read(check, regs) != 0:
                 c += read(dist, regs) - 1
@@ -47,10 +49,11 @@ def parse(data, pt2=False):
 
     return regs
 
+
 # pt 1
 r = parse(data)
-print(r['a'])
+print(r["a"])
 
 # pt 2
 r = parse(data, True)
-print(r['a'])
+print(r["a"])

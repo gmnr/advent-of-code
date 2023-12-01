@@ -5,32 +5,32 @@
 solution for day 11 of 2019
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-import sys; sys.path.append('..')
+import sys
+
+sys.path.append("..")
 from intcode import Intcode
 from collections import deque
 from matplotlib import pyplot as plt
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 
 class Robot(Intcode):
-
     def __init__(self, data, once=False, emerg_hull=False):
         self.coord = [[[0, 0], 0]]
-        self.directions = deque(['up', 'right', 'down', 'left'])
+        self.directions = deque(["up", "right", "down", "left"])
         self.direction = None
         self.color = None
         self.painted = 1
         self.emerg_hull = emerg_hull
         self.inpt = None
         super().__init__(data, once)
-
 
     def getInput(self):
         """returns the value that goes in input to op3"""
@@ -40,13 +40,11 @@ class Robot(Intcode):
         value = self.getCurrentColor()
         return value
 
-
     def getCurrentColor(self):
         """returns the color of the tile the robot is standing on"""
         current = self.coord[-1]
         self.sensor_color = current[1]
         return self.sensor_color
-
 
     def manipulate(self):
         """allows for the parsing of the 2 intcode outputs: color and rotation"""
@@ -60,7 +58,6 @@ class Robot(Intcode):
                 self.direction = self.directions[0]
             self.move()
 
-
     def findTile(self, x, y):
         """returns the tile if it's tracked, else None"""
         target = [x, y]
@@ -68,18 +65,17 @@ class Robot(Intcode):
             if elem[0] == target:
                 return elem
 
-
     def move(self):
         current = self.coord[-1]
         current[1] = self.color
 
-        x, y = current[0] # get current coordinates
+        x, y = current[0]  # get current coordinates
 
-        if self.direction == 'up':
+        if self.direction == "up":
             y += 1
-        elif self.direction == 'right':
+        elif self.direction == "right":
             x += 1
-        elif self.direction == 'down':
+        elif self.direction == "down":
             y -= 1
         else:
             x -= 1
@@ -91,6 +87,7 @@ class Robot(Intcode):
             color = 0
             self.painted += 1
         self.coord.append([[x, y], color])
+
 
 robot = Robot(data)
 print(robot.painted)

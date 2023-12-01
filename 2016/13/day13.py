@@ -5,8 +5,8 @@
 Solution for day13 2016
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from helper import advent as aoc
@@ -14,20 +14,23 @@ from helper import advent as aoc
 salt = aoc.read_input(parser=int)[0]
 start, target = (1, 1), (31, 39)
 
+
 def space(coord, salt):
     x, y = coord
-    b = bin(x*x + 3*x + 2*x*y + y + y*y + salt)
+    b = bin(x * x + 3 * x + 2 * x * y + y + y * y + salt)
     b = sum(int(x) for x in b[2:])
     if b % 2 == 0:
-        return '.'
+        return "."
     else:
-        return '#'
+        return "#"
+
 
 def adj(coord, salt):
     for c in aoc.gen_coordinates(coord):
         cx, cy = c
-        if space(c, salt) == '.' and cx >= 0 and cy >= 0:
+        if space(c, salt) == "." and cx >= 0 and cy >= 0:
             yield c
+
 
 def traverse(start, end):
     queue = [(0, start)]
@@ -46,7 +49,8 @@ def traverse(start, end):
                 if n in visited:
                     continue
 
-                queue.append((dist+1, n))
+                queue.append((dist + 1, n))
+
 
 def count_reachable(start, limit):
     queue = [start]
@@ -59,7 +63,8 @@ def count_reachable(start, limit):
                     queue.append(n)
                     distance[n] = distance[node] + 1
     return len(distance)
-                
+
+
 # pt 1
 print(traverse(start, target))
 

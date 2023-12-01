@@ -5,12 +5,13 @@
 Solution for day08 2018
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = [int(x) for x in f.read().split()]
+
 
 def build_nodes(data):
     children, metas = data[:2]
@@ -27,7 +28,12 @@ def build_nodes(data):
     if children == 0:
         return (totals, sum(data[:metas]), data[metas:])
     else:
-        return (totals, sum(scores[k - 1] for k in data[:metas] if k > 0 and k <= len(scores)), data[metas:])
+        return (
+            totals,
+            sum(scores[k - 1] for k in data[:metas] if k > 0 and k <= len(scores)),
+            data[metas:],
+        )
+
 
 total, value, remaining = build_nodes(data)
 # pt1

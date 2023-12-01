@@ -5,16 +5,16 @@
 Solution for day02 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
 
 data = aoc.read_input()
 
-class move:
 
+class move:
     def __init__(self, name, win, lose, move_score):
         self.name = name
         self.win = win
@@ -35,21 +35,14 @@ class move:
         else:
             return 3
 
-ROCK = move('A', 'C', 'B', 1)
-PAPER = move('B', 'A', 'C', 2)
-SCISSOR = move('C', 'B', 'A', 3)
 
-opponent = {
-        'A': ROCK,
-        'B': PAPER,
-        'C': SCISSOR
-        }
+ROCK = move("A", "C", "B", 1)
+PAPER = move("B", "A", "C", 2)
+SCISSOR = move("C", "B", "A", 3)
 
-player = {
-        'X': ROCK,
-        'Y': PAPER,
-        'Z': SCISSOR
-        }
+opponent = {"A": ROCK, "B": PAPER, "C": SCISSOR}
+
+player = {"X": ROCK, "Y": PAPER, "Z": SCISSOR}
 
 # pt 1
 score = 0
@@ -61,19 +54,15 @@ print(score)
 
 # pt 2
 score = 0
-outcomes = {
-        'X': 'lose',
-        'Y': 'draw',
-        'Z': 'win'
-        }
+outcomes = {"X": "lose", "Y": "draw", "Z": "win"}
 for i in data:
     opponent_move, outcome = i.split()
     opponent_move, outcome = opponent[opponent_move], outcomes[outcome]
-    if outcome == 'lose':
+    if outcome == "lose":
         score += 0
         lose_move = opponent_move.get_win()
         score += opponent[lose_move].move_score
-    elif outcome == 'draw':
+    elif outcome == "draw":
         score += 3
         score += opponent[opponent_move.name].move_score
     else:

@@ -5,22 +5,23 @@
 Solution for day17 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().strip()
 
-_, ranges = data.split(': ')
-x_area, y_area = ranges.split(', ')
-x1, x2 = map(int, x_area[2:].split('..'))
-y1, y2 = map(int, y_area[2:].split('..'))
+_, ranges = data.split(": ")
+x_area, y_area = ranges.split(", ")
+x1, x2 = map(int, x_area[2:].split(".."))
+y1, y2 = map(int, y_area[2:].split(".."))
 
 target = []
-for y in range(y1, y2+1):
-    for x in range(x1, x2+1):
+for y in range(y1, y2 + 1):
+    for x in range(x1, x2 + 1):
         target.append((x, y))
+
 
 def launch(vel, target):
     v_x, v_y = vel
@@ -50,15 +51,15 @@ def launch(vel, target):
         y += v_y
         wip.append((x, y))
 
-
     if (x, y) in target:
         sol = True
     if (x, y) in target:
         sol = True
 
     if sol:
-        return wip, max(x[1] for x in wip) 
+        return wip, max(x[1] for x in wip)
     return sol
+
 
 # pt 1
 res = []

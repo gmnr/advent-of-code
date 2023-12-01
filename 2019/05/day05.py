@@ -5,16 +5,18 @@
 solution for day05 2019
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 # get data
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 
-import sys; sys.path.append('..')
+import sys
+
+sys.path.append("..")
 from intcode import Intcode
 
 

@@ -5,29 +5,33 @@
 Solution for day 20 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-    data = f.read().split('\n\n')[:-1]
+with open("input.txt", "r") as f:
+    data = f.read().split("\n\n")[:-1]
 
 from itertools import combinations
 from operator import add, itemgetter
 
+
 def parse_tiles(data):
     tiles = {}
     for tile in data:
-        number, img = tile.split(':\n')
+        number, img = tile.split(":\n")
         number = int(number.split()[1])
         tiles[number] = list_to_image(img)
     return tiles
 
+
 def list_to_image(img):
-    return [[x for x in y] for y in img.split('\n')]
+    return [[x for x in y] for y in img.split("\n")]
+
 
 def rot90(img):
     return list(zip(*img[::-1]))
+
 
 def rotations(img):
     yield img
@@ -35,12 +39,14 @@ def rotations(img):
         img = rot90(img)
         yield img
 
+
 def poss_orientations(img):
     yield from rotations(img)
     yield from rotations(img[::-1])
 
+
 def grid(coords):
-    coords = {v:k for k, v in coords.items()}
+    coords = {v: k for k, v in coords.items()}
     size = int(len(coords) ** 0.5)
     offx = min(map(itemgetter(0), coords)) * -1
     offy = min(map(itemgetter(1), coords)) * -1
@@ -54,6 +60,7 @@ def grid(coords):
 
     return grid[::-1]
 
+
 def score_corner(grid):
     size = int(len(coord) ** 0.5) - 1
     val1 = grid[0][0]
@@ -62,15 +69,17 @@ def score_corner(grid):
     val4 = grid[size][size]
     return val1 * val2 * val3 * val4
 
+
 def get_edges(img):
     top = img[0]
     bottom = img[-1]
-    left = ''
-    right = ''
+    left = ""
+    right = ""
     for row in img:
         left += row[0]
         right += row[-1]
-    return {0:''.join(top), 1:right, 2:''.join(bottom), 3:left}
+    return {0: "".join(top), 1: right, 2: "".join(bottom), 3: left}
+
 
 def match_two(tile1, tile2):
     edge1 = get_edges(tile1)
@@ -94,14 +103,9 @@ def match_two(tile1, tile2):
                         return k1, comb
     return False
 
-def build(tiles):
 
-    ops = {
-        0: (0, 1),
-        1: (1, 0),
-        2: (0, -1),
-        3: (-1, 0)
-    }
+def build(tiles):
+    ops = {0: (0, 1), 1: (1, 0), 2: (0, -1), 3: (-1, 0)}
 
     ids = list(tiles.keys())
     curr = ids[0]
@@ -115,7 +119,8 @@ def build(tiles):
 
     while len(coord.keys()) != len(tiles.keys()):
         for main in ids:
-            if main == curr or curr in seen: continue
+            if main == curr or curr in seen:
+                continue
 
             if match_two(curr_img, tiles[main]):
                 d, img = match_two(curr_img, tiles[main])
@@ -130,24 +135,27 @@ def build(tiles):
 
     return coord, new_tiles
 
+
 def strip(tiles):
     return {k: [row[1:-1] for row in v[1:-1]] for k, v in tiles.items()}
+
 
 def image(grid, tiles):
     image = []
 
     for k, v in tiles.items():
-        tiles[k] = [''.join(x) for x in v]
+        tiles[k] = ["".join(x) for x in v]
 
     grid = [[tiles[x] for x in y] for y in grid]
 
     for l in grid:
         seg = list(zip(*l))
         for x in seg:
-            y = ''.join(x)
+            y = "".join(x)
             image.append(y)
 
     return image[::-1]
+
 
 def count_pattern(image, pattern):
     pattern_h, pattern_w = len(pattern), len(pattern[0])
@@ -156,18 +164,19 @@ def count_pattern(image, pattern):
 
     for r, row in enumerate(pattern):
         for c, cell in enumerate(row):
-            if cell == '#':
+            if cell == "#":
                 deltas.append((r, c))
 
     for img in poss_orientations(image):
         n = 0
         for r in range(img_size - pattern_h):
             for c in range(img_size - pattern_w):
-                if all(img[r + dr][c + dc] == '#' for dr, dc in deltas):
+                if all(img[r + dr][c + dc] == "#" for dr, dc in deltas):
                     n += 1
 
         if n != 0:
             return n
+
 
 # pt 1
 tiles = parse_tiles(data)
@@ -178,12 +187,10 @@ print(score_corner(grid))
 tiles = strip(tiles)
 img = image(grid, tiles)
 
-monster = [    '                  # ',
-           '#    ##    ##    ###',
-           ' #  #  #  #  #  #   ']
+monster = ["                  # ", "#    ##    ##    ###", " #  #  #  #  #  #   "]
 
-monster_cells = sum(r.count('#') for r in monster)
-water_cells = sum(r.count('#') for r in img)
+monster_cells = sum(r.count("#") for r in monster)
+water_cells = sum(r.count("#") for r in img)
 n_monsters = count_pattern(img, monster)
 rough = water_cells - n_monsters * monster_cells
 print(rough)

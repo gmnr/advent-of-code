@@ -5,18 +5,18 @@
 Solution for day21 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 import re
 from collections import defaultdict as dd
 from itertools import product
 
-regex = r'\d+'
+regex = r"\d+"
 boss_stats = re.findall(regex, data)
 
 items = """Weapons Dagger 8 4 0
@@ -36,8 +36,8 @@ Rings Defense+1 20 0 1
 Rings Defense+2 40 0 2
 Rings Defense+3 80 0 3"""
 
-class Warrior:
 
+class Warrior:
     def __init__(self, hlt, dmg, arm):
         self.hlt = int(hlt)
         self.dmg = int(dmg)
@@ -45,15 +45,16 @@ class Warrior:
 
     def equip(self, items):
         for item in items:
-            if item == None: continue
+            if item == None:
+                continue
             self.dmg += item.dmg
             self.arm += item.arm
 
     def __repr__(self):
         return f"Hit Points: {self.hlt}\nDamage: {self.dmg}\nArmor: {self.arm}"
 
-class Item:
 
+class Item:
     def __init__(self, name, cost, dmg, arm):
         self.name = name
         self.cost = int(cost)
@@ -63,8 +64,8 @@ class Item:
     def __repr__(self):
         return f"{self.name}"
 
-class Shop:
 
+class Shop:
     def __init__(self, data):
         self.items = self.init(data)
 
@@ -86,6 +87,7 @@ class Shop:
             if comb[-1] != comb[-2]:
                 yield (comb, self.get_price(comb))
 
+
 def win(me, other):
     while me.hlt > 0:
         other.hlt -= 1 if me.dmg - other.arm < 1 else me.dmg - other.arm
@@ -93,6 +95,7 @@ def win(me, other):
             return True
         me.hlt -= other.dmg - me.arm
     return False
+
 
 me = Warrior(100, 0, 0)
 boss = Warrior(*boss_stats)

@@ -5,30 +5,41 @@
 Solution for day 03 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = int(f.read().rstrip())
 
 from collections import defaultdict
 
-class Point:
 
+class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
 
 def neighboor(point):
     "The eight neighbors (with diagonals)."
     x = point.x
     y = point.y
-    return ((x+1, y), (x-1, y), (x, y+1), (x, y-1),
-            (x+1, y+1), (x-1, y-1), (x+1, y-1), (x-1, y+1))
+    return (
+        (x + 1, y),
+        (x - 1, y),
+        (x, y + 1),
+        (x, y - 1),
+        (x + 1, y + 1),
+        (x - 1, y - 1),
+        (x + 1, y - 1),
+        (x - 1, y + 1),
+    )
+
 
 def distance(p, q=(0, 0)):
     return abs(p.x - q[0]) + abs(p.y - q[1])
+
 
 def spiral(part_b=False):
     matrix = defaultdict(int)
@@ -39,7 +50,6 @@ def spiral(part_b=False):
     max_step = 1
     turn_count = 0
     num = 0
-
 
     while True:
         if part_b:
@@ -62,6 +72,7 @@ def spiral(part_b=False):
                 max_step += 1
                 turn_count = 0
             facing = Point(facing.y, -facing.x)
+
 
 # pt 1
 print(next(distance(pos) for (pos, val) in spiral() if val == data))

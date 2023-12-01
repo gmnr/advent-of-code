@@ -5,8 +5,8 @@
 Solution for day17 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
@@ -17,24 +17,27 @@ data = aoc.read_input()[0]
 
 # pt 1
 H_LINE = [(0, 0), (1, 0), (2, 0), (3, 0)]
-CROSS  = [(0, 1), (1, 1), (1, 2), (1, 0), (2, 1)]
-REV_L  = [(0, 0), (1, 0), (2, 0), (2, 1), (2, 2)]
+CROSS = [(0, 1), (1, 1), (1, 2), (1, 0), (2, 1)]
+REV_L = [(0, 0), (1, 0), (2, 0), (2, 1), (2, 2)]
 V_LINE = [(0, 0), (0, 1), (0, 2), (0, 3)]
-PUNCH  = [(0, 0), (1, 0), (0, 1), (1, 1)]
+PUNCH = [(0, 0), (1, 0), (0, 1), (1, 1)]
 rocks = [H_LINE, CROSS, REV_L, V_LINE, PUNCH]
 
-JETS = {'>': (1, 0), '<': (-1, 0)}
+JETS = {">": (1, 0), "<": (-1, 0)}
+
 
 def gen_rock(h, rocks, i):
-    return [(x+2, y+h+1) for x, y in rocks[i]]
+    return [(x + 2, y + h + 1) for x, y in rocks[i]]
+
 
 def move(r, dir):
     dx, dy = dir
-    new_r = [(x+dx, y+dy) for x, y in r]
+    new_r = [(x + dx, y + dy) for x, y in r]
     x_coords = list(map(itemgetter(0), new_r))
     if min(x_coords) >= 0 and max(x_coords) <= 6:
         return new_r
     return r
+
 
 def drop(rocks, turns):
     h = -1
@@ -43,7 +46,7 @@ def drop(rocks, turns):
     i, j = 0, 0
 
     for _ in range(turns):
-        r = gen_rock(h+3, rocks, i)
+        r = gen_rock(h + 3, rocks, i)
 
         while True:
             move_r = move(r, JETS[data[j]])
@@ -79,8 +82,9 @@ def drop(rocks, turns):
 
     return h + 1
 
+
 # pt 1
-height  = drop(rocks, 2022)
+height = drop(rocks, 2022)
 print(height)
 
 # pt 2

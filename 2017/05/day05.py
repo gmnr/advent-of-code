@@ -5,13 +5,14 @@
 Solution for day 05 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-    data = f.read().split('\n')[:-1]
+with open("input.txt", "r") as f:
+    data = f.read().split("\n")[:-1]
     data = [int(x) for x in data]
+
 
 def part1(data):
     steps = 0
@@ -25,6 +26,7 @@ def part1(data):
             steps += 1
         except IndexError:
             return steps
+
 
 def part2(data):
     steps = 0
@@ -41,6 +43,7 @@ def part2(data):
             steps += 1
         except IndexError:
             return steps
+
 
 # pt 1
 print(part1(data))

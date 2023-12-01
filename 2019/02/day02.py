@@ -5,20 +5,22 @@
 Solution for day2 2019
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-import sys; sys.path.append('..')
+import sys
+
+sys.path.append("..")
 from intcode import Intcode
 
 # get data
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 data = list(data)
-data[2] = '12'
-data[4] = '2'
+data[2] = "12"
+data[4] = "2"
 data = "".join(data)
 
 intcode = Intcode(data)

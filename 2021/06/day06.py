@@ -5,14 +5,15 @@
 Solution for day06 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-    data = list(map(int, f.read().strip().split(',')))
+with open("input.txt", "r") as f:
+    data = list(map(int, f.read().strip().split(",")))
 
 from collections import defaultdict
+
 
 def grow(data, days):
     fish = defaultdict(int)
@@ -31,6 +32,7 @@ def grow(data, days):
 
             fish = new_fish
     return fish, sum(fish.values())
+
 
 fish, number = grow(data, 80)
 print(number)

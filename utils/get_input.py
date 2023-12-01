@@ -6,8 +6,8 @@ Use this script to download the advent-of-code input file automatically
 It requires an hidden .cookie file with the cookies for your advent-of-code session
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from datetime import date
@@ -32,32 +32,32 @@ if month != 12 or day > 25:
     sys.exit()
 
 # get cookies while in the script directory
-with open('.cookie', 'r') as f:
+with open(".cookie", "r") as f:
     cookie = f.read().strip()
-cookies = {'session': cookie}
+cookies = {"session": cookie}
 
 # go back to advent-of-code repository
-os.chdir('./..')
+os.chdir("./..")
 
 # move into year folder and create it if it's the first year
-if os.path.isdir(f'./{year}'):
-    os.chdir(f'./{year}')
+if os.path.isdir(f"./{year}"):
+    os.chdir(f"./{year}")
 else:
-    os.mkdir(f'./{year}')
-    os.chdir(f'./{year}')
+    os.mkdir(f"./{year}")
+    os.chdir(f"./{year}")
 
 # check if folder exist then create it or move into it (zfill for padding in file name)
 foldername = str(day).zfill(2)
-if os.path.isdir(f'./{foldername}'):
-    os.chdir(f'./{foldername}')
+if os.path.isdir(f"./{foldername}"):
+    os.chdir(f"./{foldername}")
 else:
-    os.mkdir(f'./{foldername}')
-    os.chdir(f'./{foldername}')
+    os.mkdir(f"./{foldername}")
+    os.chdir(f"./{foldername}")
 
 # if file exists exit
-if os.path.exists('./input.txt'):
-    print('Input file has already been downloaded')
-    print('Happy Coding!')
+if os.path.exists("./input.txt"):
+    print("Input file has already been downloaded")
+    print("Happy Coding!")
     sys.exit()
 
 # fetch data
@@ -66,9 +66,9 @@ r = requests.get(url, cookies=cookies)
 res = r.text
 
 # write the input puzzle in the input file
-with open('input.txt', 'w') as f:
+with open("input.txt", "w") as f:
     f.write(res)
-print(f'Data fetched: input.txt written in {year}/{foldername}')
+print(f"Data fetched: input.txt written in {year}/{foldername}")
 
 # define the payload (python file template)
 payload = f'''#!/usr/bin/env python3
@@ -78,8 +78,8 @@ payload = f'''#!/usr/bin/env python3
 Solution for day{foldername} {year}
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
@@ -89,12 +89,12 @@ print(data)
 '''
 
 # write the template in the folder
-with open(f'day{foldername}.py', 'w') as f:
+with open(f"day{foldername}.py", "w") as f:
     f.write(payload)
-print(f'Python file: created template')
+print(f"Python file: created template")
 
 # symlink the helper directory
 try:
-    os.symlink('../../helper', 'helper')
+    os.symlink("../../helper", "helper")
 except:
-    print('WARN: Could not symlink the helper library')
+    print("WARN: Could not symlink the helper library")

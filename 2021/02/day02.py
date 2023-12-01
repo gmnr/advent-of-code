@@ -5,10 +5,10 @@
 Solution for day02 2021
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 pos = 0
@@ -17,13 +17,13 @@ aim = 0
 new_depth = 0
 
 for cmd in data:
-    inst, value = cmd.split(' ')
+    inst, value = cmd.split(" ")
     value = int(value)
-    
-    if inst == 'forward':
+
+    if inst == "forward":
         pos += value
         new_depth += aim * value
-    elif inst == 'down':
+    elif inst == "down":
         depth += value
         aim += value
     else:

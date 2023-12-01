@@ -5,8 +5,8 @@
 Solution for day11 2016
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from helper import advent as aoc
@@ -14,12 +14,14 @@ import re
 
 data = aoc.read_input()
 
+
 def parse(data):
     floors = []
     for line in data:
         matches = re.findall(r"microchip|generator", line)
         floors.append(len(matches))
     return floors
+
 
 def move(items):
     moves = 0
@@ -31,6 +33,7 @@ def move(items):
         items[low_floor + 1] += items[low_floor]
         items[low_floor] = 0
     return moves
+
 
 # p1
 floors = parse(data)

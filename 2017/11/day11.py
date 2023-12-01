@@ -5,11 +5,11 @@
 Solution for day 11 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
-with open('input.txt', 'r') as f:
-    data = f.read()[:-1].split(',')
+with open("input.txt", "r") as f:
+    data = f.read()[:-1].split(",")
 
 from operator import add
 
@@ -19,7 +19,7 @@ mov = {
     "se": (1, -1),
     "s": (0, -1),
     "sw": (-1, -1),
-    "nw": (-1, 1)
+    "nw": (-1, 1),
 }
 
 pos = (0, 0)
@@ -27,6 +27,7 @@ walk = []
 for step in data:
     pos = tuple(map(add, pos, mov[step]))
     walk.append(pos)
+
 
 def distance(start, end):
     x1, y1 = start
@@ -36,6 +37,7 @@ def distance(start, end):
     ySteps = abs(y1 - y2)
 
     return max(xSteps, ySteps)
+
 
 # pt 1
 print(distance((0, 0), pos))

@@ -5,8 +5,8 @@
 Solution for day10 2016
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from helper import advent as aoc
@@ -15,6 +15,7 @@ import re
 
 data = aoc.read_input()
 
+
 def parse(instructions):
     regex = r"value \d*|bot \d*|output \d*"
     instr = dd(list)
@@ -22,7 +23,7 @@ def parse(instructions):
 
     for i in instructions:
         res = re.findall(regex, i)
-        string = ''.join(res)
+        string = "".join(res)
         if len(res) == 2:
             val, bot = aoc.ints(string)
             bots[bot].append(val)
@@ -41,6 +42,7 @@ def parse(instructions):
 
     return instr, complete, incomplete, bots
 
+
 instr, complete, incomplete, bots = parse(data)
 output = dd(list)
 
@@ -49,11 +51,11 @@ for c in complete:
     low, high = sorted(bots[c])
     if low == 17 and high == 61:
         print(c)
-    string = ''.join(instr[c])
+    string = "".join(instr[c])
     s_low, s_high = instr[c]
     i_low, i_high = aoc.ints(string)
 
-    if s_low.startswith('o'):
+    if s_low.startswith("o"):
         output[i_low].append(low)
     else:
         bots[i_low].append(low)
@@ -63,7 +65,7 @@ for c in complete:
         else:
             incomplete.append(i_low)
 
-    if s_high.startswith('o'):
+    if s_high.startswith("o"):
         output[i_high].append(high)
     else:
         bots[i_high].append(high)

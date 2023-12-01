@@ -5,8 +5,8 @@
 Solution for day18 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
@@ -14,6 +14,7 @@ from collections import deque
 from itertools import combinations, product
 
 cubes = aoc.read_input(parser=aoc.ints)
+
 
 def count_faces(data):
     tot = len(data) * 6
@@ -24,13 +25,15 @@ def count_faces(data):
 
     return tot
 
+
 def neighbors(x, y, z):
-	yield (x + 1, y    , z    )
-	yield (x - 1, y    , z    )
-	yield (x    , y + 1, z    )
-	yield (x    , y - 1, z    )
-	yield (x    , y    , z + 1)
-	yield (x    , y    , z - 1)
+    yield (x + 1, y, z)
+    yield (x - 1, y, z)
+    yield (x, y + 1, z)
+    yield (x, y - 1, z)
+    yield (x, y, z + 1)
+    yield (x, y, z - 1)
+
 
 def out_of_bounds(cubes, src, rangex, rangey, rangez):
     seen = set()
@@ -57,6 +60,7 @@ def out_of_bounds(cubes, src, rangex, rangey, rangez):
 
     return faces, seen
 
+
 # pt 1
 surface = count_faces(cubes)
 print(surface)
@@ -75,7 +79,7 @@ rangey = range(miny, maxy + 1)
 rangez = range(minz, maxz + 1)
 
 allseen = set()
- 
+
 for c in product(rangex, rangey, rangez):
     if c not in cubes:
         if c not in allseen:

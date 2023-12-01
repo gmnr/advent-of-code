@@ -5,18 +5,18 @@
 Solution for day11 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 import helper.advent as aoc
 from operator import add, mul
 from math import lcm
 
-data = aoc.read_input(sep='\n\n')
+data = aoc.read_input(sep="\n\n")
+
 
 class Monkey:
-
     def __init__(self, name, items, op, val, test, if_true, if_false):
         self.name = name
         self.items = list(items)
@@ -27,12 +27,13 @@ class Monkey:
         self.if_false = if_false
         self.counter = 0
 
+
 def parse(data):
     monkeys = []
     for i in data:
         args = []
         for l in i.splitlines():
-            if l.startswith('  Op'):
+            if l.startswith("  Op"):
                 op, val = l.split()[-2:]
                 if val.isdigit():
                     val = int(val)
@@ -46,10 +47,11 @@ def parse(data):
         args.insert(2, op)
 
         if isinstance(args[1], int):
-            args[1] = args[1],
+            args[1] = (args[1],)
 
         monkeys.append(Monkey(*args))
     return monkeys
+
 
 def monkey_business(monkeys, rounds, not_worry=False):
     if not_worry:
@@ -57,7 +59,7 @@ def monkey_business(monkeys, rounds, not_worry=False):
     for _ in range(rounds):
         for m in monkeys:
             for i in m.items:
-                if m.op[0] == '+':
+                if m.op[0] == "+":
                     oper = add
                 else:
                     oper = mul
@@ -81,6 +83,7 @@ def monkey_business(monkeys, rounds, not_worry=False):
                     monkeys[m.if_false].items.append(item)
             m.items = []
     return mul(*sorted([m.counter for m in monkeys])[-2:])
+
 
 # pt 1
 monkeys = parse(data)

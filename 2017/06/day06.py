@@ -5,12 +5,12 @@
 Solution for day 06 2017
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
-    data = f.read()[:-1].split('\t')
+with open("input.txt", "r") as f:
+    data = f.read()[:-1].split("\t")
 
 from itertools import cycle, islice
 

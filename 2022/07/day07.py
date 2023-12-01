@@ -5,8 +5,8 @@
 Solution for day07 2022
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from collections import defaultdict
@@ -14,30 +14,32 @@ import helper.advent as aoc
 
 data = aoc.read_input()
 
+
 def parse(data):
     filesystem = defaultdict(list)
     path = tuple()
 
     for l in data:
-        if l.startswith('$ cd'):
+        if l.startswith("$ cd"):
             dest = l.split()[-1]
-            if dest == '..':
+            if dest == "..":
                 path = path[:-1]
             else:
                 path = path + (dest,)
 
-        elif l.startswith('$ ls'):
+        elif l.startswith("$ ls"):
             continue
 
         else:
             x, y = l.split()
-            if x == 'dir':
+            if x == "dir":
                 new_path = path + (y,)
                 filesystem[path].append(new_path)
             else:
                 filesystem[path].append(int(x))
 
     return filesystem
+
 
 def complete(d):
     size = 0
@@ -50,6 +52,7 @@ def complete(d):
 
     return size
 
+
 # pt 1
 filesystem = parse(data)
 total = 0
@@ -61,8 +64,8 @@ print(total)
 
 # pt 2
 space = 70_000_000
-occupied = complete(('/',))
-needed_to_update= 30_000_000
+occupied = complete(("/",))
+needed_to_update = 30_000_000
 
 delta = needed_to_update - (space - occupied)
 candidates = []

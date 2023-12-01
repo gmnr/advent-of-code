@@ -5,17 +5,17 @@
 Solution for day14 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 import re
 
-class Reindeer:
 
+class Reindeer:
     def __init__(self, name, speed, end, rest):
         self.name = name
         self.speed = speed
@@ -24,7 +24,7 @@ class Reindeer:
 
     def move(self, sec):
         p = self.end + self.rest
-        if sec % p  == 0:
+        if sec % p == 0:
             return int((sec / p) * self.end * self.speed)
         else:
             runs = int(sec / p) * self.end
@@ -33,9 +33,9 @@ class Reindeer:
 
     @classmethod
     def from_string(cls, string):
-        name, rest = string.split(' can fly ')
-        speed_string, time_string = rest.split(', but then must rest for ')
-        regex = r'\d+'
+        name, rest = string.split(" can fly ")
+        speed_string, time_string = rest.split(", but then must rest for ")
+        regex = r"\d+"
         speed, end = re.findall(regex, speed_string)
         rest = re.findall(regex, time_string)[0]
 
@@ -44,9 +44,11 @@ class Reindeer:
     def __repr__(self):
         return f"n:{self.name}  s:{self.speed}  e:{self.end}  r:{self.rest}"
 
+
 def score(res, scores):
     res = [True if x == max(res) else False for x in res]
     return [x + y for x, y in zip(res, scores)]
+
 
 reindeers = []
 for line in data:

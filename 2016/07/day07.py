@@ -5,8 +5,8 @@
 Solution for day07 2016
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
 from helper import advent as aoc
@@ -16,11 +16,11 @@ import re
 
 data = aoc.read_input()
 
+
 def is_palindrome(s, n, pt2=False):
     founds = []
     for i in range(len(s) - n + 1):
-        chunk = s[i:i+n]
-
+        chunk = s[i : i + n]
 
         if not pt2:
             if chunk == chunk[::-1]:
@@ -34,14 +34,15 @@ def is_palindrome(s, n, pt2=False):
     if founds:
         return founds
 
+
 def tsl(data):
     cnt = 0
     for l in data:
-        regex = r'\[(.+?)\]'
+        regex = r"\[(.+?)\]"
         inside = re.findall(regex, l)
 
         for i in inside:
-            l = l.replace('[' + i + ']', ' ')
+            l = l.replace("[" + i + "]", " ")
 
         outside = l.split()
         inside_condition = any([is_palindrome(x, 4) for x in inside])
@@ -50,26 +51,44 @@ def tsl(data):
             cnt += 1
     return cnt
 
+
 def ssl(data):
     cnt = 0
     for l in data:
-        regex = r'\[(.+?)\]'
+        regex = r"\[(.+?)\]"
         inside = re.findall(regex, l)
 
         for i in inside:
-            l = l.replace('[' + i + ']', ' ')
+            l = l.replace("[" + i + "]", " ")
 
         outside = l.split()
 
-        insides = list(chain.from_iterable([is_palindrome(x, 3, True) for x in inside if is_palindrome(x, 3, True) is not None]))
-        outsides = list(chain.from_iterable([is_palindrome(x, 3, True) for x in outside if is_palindrome(x, 3, True) is not None]))
-        opp_outsides = [x[1:]+x[1] for x in outsides]
+        insides = list(
+            chain.from_iterable(
+                [
+                    is_palindrome(x, 3, True)
+                    for x in inside
+                    if is_palindrome(x, 3, True) is not None
+                ]
+            )
+        )
+        outsides = list(
+            chain.from_iterable(
+                [
+                    is_palindrome(x, 3, True)
+                    for x in outside
+                    if is_palindrome(x, 3, True) is not None
+                ]
+            )
+        )
+        opp_outsides = [x[1:] + x[1] for x in outsides]
 
         for i in insides:
             if i in opp_outsides:
                 cnt += 1
                 break
     return cnt
+
 
 # pt 1
 print(tsl(data))

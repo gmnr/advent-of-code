@@ -5,50 +5,30 @@
 Solution for day22 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().rstrip()
 
 import re
 import copy
 from random import choice
 
-regex = r'\d+'
+regex = r"\d+"
 other_data = [int(x) for x in re.findall(regex, data)]
 
 spells = {
-    'Magic Missile': {
-        'cost': 53,
-        'dmg': 4,
-        'effect': [None]
-    },
-    'Drain': {
-        'cost': 73,
-        'dmg': 2,
-        'effect': [None]
-    },
-    'Shield': {
-        'cost': 113,
-        'dmg': None,
-        'effect': ['Shield', 7, 6]
-    },
-    'Poison': {
-        'cost': 173,
-        'dmg': None,
-        'effect': ['Poison', 3, 6]
-    },
-    'Recharge': {
-        'cost': 229,
-        'dmg': None,
-        'effect': ['Recharge', 101, 5]
-    }
+    "Magic Missile": {"cost": 53, "dmg": 4, "effect": [None]},
+    "Drain": {"cost": 73, "dmg": 2, "effect": [None]},
+    "Shield": {"cost": 113, "dmg": None, "effect": ["Shield", 7, 6]},
+    "Poison": {"cost": 173, "dmg": None, "effect": ["Poison", 3, 6]},
+    "Recharge": {"cost": 229, "dmg": None, "effect": ["Recharge", 101, 5]},
 }
 
-class Sorcerer:
 
+class Sorcerer:
     def __init__(self, hlt, dmg, mana, spells=None):
         self.hlt = hlt
         self.dmg = dmg
@@ -63,16 +43,16 @@ class Sorcerer:
     def apply(self):
         if self.effects == {}:
             return None
-        self.effects = {k:v for k,v in self.effects.items() if v[0] != 0}
+        self.effects = {k: v for k, v in self.effects.items() if v[0] != 0}
 
         for key in self.effects.keys():
             timer, amt = self.effects[key]
             self.effects[key][0] = timer - 1
-            if key == 'Recharge':
+            if key == "Recharge":
                 self.mana += amt
-            elif key == 'Poison':
+            elif key == "Poison":
                 self.hlt -= amt
-            elif key == 'Shield':
+            elif key == "Shield":
                 self.arm = amt
                 if timer == 1:
                     self.arm = 0
@@ -91,13 +71,13 @@ class Sorcerer:
         self.mana -= spell.cost
         if len(spell.effect) == 3:
             eff, val, turn = spell.effect
-        if spell.name in ['Shield', 'Recharge']:
+        if spell.name in ["Shield", "Recharge"]:
             self.effects[spell.name] = [turn, val]
-        elif spell.name == 'Poison':
+        elif spell.name == "Poison":
             other.effects[spell.name] = [turn, val]
-        elif spell.name == 'Magic Missile':
+        elif spell.name == "Magic Missile":
             other.hlt -= spell.dmg
-        elif spell.name == 'Drain':
+        elif spell.name == "Drain":
             other.hlt -= spell.dmg
             self.hlt += spell.dmg
 
@@ -107,8 +87,8 @@ class Sorcerer:
     def __repr__(self):
         return f"HLT:{self.hlt} ATK:{self.dmg} MAN:{self.mana}"
 
-class Spell:
 
+class Spell:
     def __init__(self, name, cost, dmg, effect):
         self.name = name
         self.cost = cost
@@ -126,11 +106,13 @@ class Spell:
     def __repr__(self):
         return f"{self.name}"
 
+
 def gen():
     x = [1, 0]
     while True:
         for i in x:
             yield i
+
 
 def play(p1, p2, sp, hard=False):
     me = copy.deepcopy(p1)
@@ -156,9 +138,10 @@ def play(p1, p2, sp, hard=False):
             other.apply()
             if other.hlt <= 0:
                 return me.spent
-            me.hlt -= (other.dmg - me.arm)
+            me.hlt -= other.dmg - me.arm
             if me.hlt <= 0:
                 return False
+
 
 def generate_spells(spells, l):
     res = []
@@ -169,9 +152,10 @@ def generate_spells(spells, l):
             res.append(nx)
     return res
 
+
 me = Sorcerer(50, 0, 500, spells)
 sorcerer = Sorcerer(*other_data, 0)
-spells = [x for x in spells if x != 'Drain']
+spells = [x for x in spells if x != "Drain"]
 # pt 1
 wins = []
 while len(wins) < 5:

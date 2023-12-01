@@ -5,22 +5,23 @@
 Solution for day12 2015
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read()
 
 import re
 from json import loads
 
 # pt1
-digits = r'-\d+|\d+'
+digits = r"-\d+|\d+"
 nums = [int(x) for x in re.findall(digits, data)]
 print(sum(nums))
 # pt2
 new_data = loads(data)
+
 
 def red_exclude(data):
     if type(data) == int:
@@ -29,10 +30,11 @@ def red_exclude(data):
         return sum(map(red_exclude, data))
     if type(data) == dict:
         vals = data.values()
-        if 'red' in vals:
+        if "red" in vals:
             return 0
         return sum(map(red_exclude, vals))
     else:
         return 0
+
 
 print(red_exclude(new_data))

@@ -5,11 +5,11 @@
 Solution for day 13 2020
 """
 
-__author__ = 'Guido Minieri'
-__license__ = 'GPL'
+__author__ = "Guido Minieri"
+__license__ = "GPL"
 
 
-with open('input.txt', 'r') as f:
+with open("input.txt", "r") as f:
     data = f.read().splitlines()
 
 from collections import defaultdict as dd
@@ -18,7 +18,7 @@ from math import ceil, floor, gcd
 timetable = dd(int)
 
 depart = int(data[0])
-buses = [int(x) for x in [y for y in data[1].split(',') if y != "x"]]
+buses = [int(x) for x in [y for y in data[1].split(",") if y != "x"]]
 
 for bus in buses:
     div = depart / bus
@@ -27,24 +27,30 @@ for bus in buses:
     timetable[lower * bus] = bus
     timetable[higher * bus] = bus
 
-def lcm(x, y): return x * y // gcd(x, y)
+
+def lcm(x, y):
+    return x * y // gcd(x, y)
+
 
 def find_first(first, second, offset):
     x = 0
     y = 0
 
     while second * y - first * x != offset:
-        if second * y > first * x: x += 1
-        else: y += 1
+        if second * y > first * x:
+            x += 1
+        else:
+            y += 1
 
     return lcm(first, second), first * x
+
 
 # pt1
 match = min([k for k in timetable.keys() if k > depart])
 wait = match - depart
 print(wait * timetable[match])
 # pt2
-times = [x for x in data[1].split(',')]
+times = [x for x in data[1].split(",")]
 times = [int(x) if x != "x" else 0 for x in times]
 table = [(i, val) for i, val in enumerate(times) if val != 0]
 val1 = table[0][1]

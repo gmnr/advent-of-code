@@ -4,8 +4,8 @@
 import re
 
 # open input file
-with open('input.txt', 'r') as f:
-    data = f.readlines()    # to remove the last carriage return
+with open("input.txt", "r") as f:
+    data = f.readlines()  # to remove the last carriage return
 
 
 regex = r"\d+"
