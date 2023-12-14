@@ -40,6 +40,15 @@ def transpose(matrix) -> list:
     return list(zip(*matrix))
 
 
+def rotate90(l) -> set:
+    """Rotate by 90 deg"""
+    new = set()
+    for c in range(len(l[0])):
+        new_row = set(row[c] for row in l)[::-1]
+        new.add(new_row)
+    return new
+
+
 def first(iterable, default=None):
     "Return first item in iterable, or default."
     return next(iter(iterable), default)
