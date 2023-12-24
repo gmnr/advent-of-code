@@ -117,10 +117,10 @@ for d in data:
     games.append(hand)
 
 # pt 1
-# score = 0
-# for rank, h in enumerate(sorted(games, key=cmp_to_key(sort_hands), reverse=True), 1):
-#     score += rank * bids[h]
-# print(score)
+score = 0
+for rank, h in enumerate(sorted(games, key=cmp_to_key(sort_hands), reverse=True), 1):
+    score += rank * bids[h]
+print(score)
 
 # pt 2
 score = 0
