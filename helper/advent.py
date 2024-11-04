@@ -55,7 +55,7 @@ def first(iterable, default=None):
     return next(iter(iterable), default)
 
 
-def gen_coordinates(coord, n=4) -> tuple:
+def gen_coordinates(coord, n=4):
     """Generate 4, 8, 9 points around the given `coord`"""
     x, y = coord
     nb = ((0, 1), (1, 0), (0, -1), (-1, 0))
@@ -78,12 +78,12 @@ def manhattan_dist(a, b) -> int:
 
 
 def astar(start, h_func, moves_func):
-    "Find a shortest sequence of states from start to a goal state (a state s with h_func(s) == 0)."
+    """A* algorithm"""
     frontier = [(h_func(start), start)]
     previous = {start: None}
     path_cost = {start: 0}
     while frontier:
-        (f, s) = heappop(frontier)
+        (_, s) = heappop(frontier)
         if h_func(s) == 0:
             return Path(previous, s)
         for s2 in moves_func(s):
@@ -96,5 +96,9 @@ def astar(start, h_func, moves_func):
 
 
 def Path(previous, s):
-    "Return a list of states that lead to state s, according to the previous dict."
     return [] if (s is None) else Path(previous, previous[s]) + [s]
+
+
+def lprint(arg):
+    """Print iterable in lines"""
+    print(*arg, sep="\n")
