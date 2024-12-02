@@ -15,17 +15,15 @@ from collections import Counter
 data = aoc.read_input()
 
 # pt 1
-left = []
-right = []
+left, right = [], []
 for pair in data:
-    x1, x2 = pair.split()
-    left.append(int(x1))
-    right.append(int(x2))
+    l, r = map(int, pair.split())
+    left.append(l)
+    right.append(r)
 
-left = sorted(left)
-right = sorted(right)
-together = zip(left, right)
-print(sum((abs(x - y) for x, y in together)))
+left.sort()
+right.sort()
+print(sum((abs(l - r) for l, r in zip(left, right))))
 
 # pt 2
 mult = Counter(right)
