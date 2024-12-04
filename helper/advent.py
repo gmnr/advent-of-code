@@ -69,3 +69,8 @@ def manhattan_dist(a, b) -> int:
     ax, ay = a
     bx, by = b
     return abs(ax - bx) + abs(ay - by)
+
+
+def lprint(arg):
+    """Print iterable in lines"""
+    print(*arg, sep="\n")
