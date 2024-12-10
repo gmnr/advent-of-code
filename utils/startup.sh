@@ -15,6 +15,7 @@ python3 get_input.py
 cd $ROOT
 if cd $YEAR ; then
   cd $DAY
+  open "https://adventofcode.com/$YEAR/day/$DAY"
   nvim "day$DAY.py"
 else
   nvim
