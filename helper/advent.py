@@ -9,6 +9,7 @@ __author__ = "Guido Minieri"
 __license__ = "GPL"
 
 import re
+import heapq
 
 
 def read_input(src="input", parser=str, sep="\n") -> tuple:
@@ -66,11 +67,53 @@ def gen_coordinates(coord, n=4):
 
 def manhattan_dist(a, b) -> int:
     """Calculate manhattan distance between two points"""
-    ax, ay = a
-    bx, by = b
-    return abs(ax - bx) + abs(ay - by)
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
 def lprint(arg):
     """Print iterable in lines"""
     print(*arg, sep="\n")
+
+
+def mapt(function, *sequences) -> tuple:
+    """`map`, with the result as a tuple."""
+    return tuple(map(function, *sequences))
+
+
+def mapl(function, *sequences) -> list:
+    """`map`, with the result as a list."""
+    return list(map(function, *sequences))
+
+
+def astar(start, end, grid, fn=manhattan_dist):
+    frontier = []
+    heapq.heappush(frontier, (start, 0))
+
+    previous = {start: None}
+    cost = {start: 0}
+
+    while frontier:
+
+        current, _ = heapq.heappop(frontier)
+
+        if current == end:
+            break
+
+        for n in gen_coordinates(current):
+            if n in grid:
+                new_cost = cost[current] + 1
+                if n not in cost or new_cost < cost[n]:
+                    cost[n] = new_cost
+                    priority = new_cost + fn(n, end)
+                    heapq.heappush(frontier, (n, priority))
+                    previous[n] = current
+
+    return previous, cost
+
+
+def add_tuples(a, b):
+    return (a[0] + b[0], a[1] + b[1])
+
+
+def sub_tuples(a, b):
+    return (a[0] - b[0], a[1] - b[1])
