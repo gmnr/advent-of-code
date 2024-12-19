@@ -85,7 +85,7 @@ def mapl(function, *sequences) -> list:
     return list(map(function, *sequences))
 
 
-def astar(start, end, grid, fn=manhattan_dist):
+def astar(start, end, grid, cost_fn=lambda x: 1, heuristic_fn=manhattan_dist):
     frontier = []
     heapq.heappush(frontier, (start, 0))
 
@@ -101,10 +101,10 @@ def astar(start, end, grid, fn=manhattan_dist):
 
         for n in gen_coordinates(current):
             if n in grid:
-                new_cost = cost[current] + 1
+                new_cost = cost[current] + cost_fn(n)
                 if n not in cost or new_cost < cost[n]:
                     cost[n] = new_cost
-                    priority = new_cost + fn(n, end)
+                    priority = new_cost + heuristic_fn(n, end)
                     heapq.heappush(frontier, (n, priority))
                     previous[n] = current
 
