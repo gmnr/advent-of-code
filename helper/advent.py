@@ -38,10 +38,10 @@ def transpose(matrix) -> list:
 
 def rotate90(matrix):
     """Rotate a list of arrays by 90 deg"""
-    new = set()
+    new = []
     for c in range(len(matrix[0])):
-        new_row = set(row[c] for row in matrix)[::-1]
-        new.add(new_row)
+        new_row = [row[c] for row in matrix][::-1]
+        new.append(new_row)
     return new
 
 
