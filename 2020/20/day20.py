@@ -12,7 +12,6 @@ __license__ = "GPL"
 with open("input.txt", "r") as f:
     data = f.read().split("\n\n")[:-1]
 
-from itertools import combinations
 from operator import add, itemgetter
 
 
