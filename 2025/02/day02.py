@@ -10,7 +10,6 @@ __license__ = "GPL"
 
 
 import helper.advent as aoc
-from textwrap import wrap
 
 data = aoc.read_input(sep=",")
 
@@ -26,11 +25,13 @@ def is_invalid(x):
 
 def is_all_invalid(x):
     check = str(x)
+    n = len(check)
 
-    for i in range(1, (len(check) // 2) + 1):
-        chunks = wrap(check, i)
-        if all(c == chunks[0] for c in chunks):
-            return x
+    for i in range(1, (n // 2) + 1):
+        new_s = check[:i]
+        if new_s * (n // i) == check:
+            return check
+
     return False
 
 
@@ -38,9 +39,7 @@ def is_all_invalid(x):
 invalid = 0
 for ranges in data:
     first, last = ranges.split("-")
-    first = int(first)
-    last = int(last)
-    for n in range(first, last + 1):
+    for n in range(int(first), int(last) + 1):
         if is_invalid(n):
             invalid += n
 print(invalid)
@@ -49,9 +48,7 @@ print(invalid)
 invalid = 0
 for ranges in data:
     first, last = ranges.split("-")
-    first = int(first)
-    last = int(last)
-    for n in range(first, last + 1):
+    for n in range(int(first), int(last) + 1):
         if is_all_invalid(n):
             invalid += n
 print(invalid)
