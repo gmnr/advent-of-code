@@ -50,6 +50,16 @@ def first(iterable, default=None):
     return next(iter(iterable), default)
 
 
+def to_grid(arr) -> dict:
+    grid = {}
+
+    for y, line in enumerate(arr):
+        for x, c in enumerate(line):
+            grid[(x, y)] = c
+
+    return grid
+
+
 def gen_coordinates(coord, n=4):
     """Generate 4, 8, 9 points around the given `coord`"""
     x, y = coord
@@ -68,11 +78,6 @@ def gen_coordinates(coord, n=4):
 def manhattan_dist(a, b) -> int:
     """Calculate manhattan distance between two points"""
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
-
-
-def lprint(arg):
-    """Print iterable in lines"""
-    print(*arg, sep="\n")
 
 
 def mapt(function, *sequences) -> tuple:

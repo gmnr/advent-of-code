@@ -14,11 +14,7 @@ from collections import Counter
 
 data = aoc.read_input()
 
-grid = {}
-for y, line in enumerate(data):
-    for x, char in enumerate(line):
-        grid[(x, y)] = char
-
+grid = aoc.to_grid(data)
 to_remove = []
 
 # pt 1
