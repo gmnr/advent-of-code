@@ -5,7 +5,7 @@
 Advent of code day 1 solution
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 __version__ = "x.x.x"
 

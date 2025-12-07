@@ -5,7 +5,7 @@
 Solution for day19 2015
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 with open("input.txt", "r") as f:

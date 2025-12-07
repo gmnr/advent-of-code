@@ -5,7 +5,7 @@
 Solution for day 4
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = ""
 
 

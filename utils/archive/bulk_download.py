@@ -6,7 +6,7 @@ fetch automatically the puzzle for the aoc challanges
 in order to work needs a .cookie file with the session cookie for the advent of code site
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 

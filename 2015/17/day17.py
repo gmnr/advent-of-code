@@ -5,7 +5,7 @@
 Soluton for day17 2015
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 

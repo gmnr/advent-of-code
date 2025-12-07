@@ -6,7 +6,7 @@ Use this script to download the advent-of-code input file automatically
 It requires an hidden .cookie file with the cookies for your advent-of-code session
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 
@@ -77,7 +77,7 @@ payload = f'''#!/usr/bin/env python3
 Solution for day{foldername} {year}
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 

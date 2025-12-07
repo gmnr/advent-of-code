@@ -5,7 +5,7 @@
 Solution for day13 2015
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 
@@ -56,10 +56,10 @@ scores = [score_configuration(x, guests) for x in combs]
 print(max(scores))
 # pt 2
 guest_list = guests.keys()
-guests["Guido"] = []
+guests["gmnr"] = []
 for k in guest_list:
-    guests[k].append(("Guido", 0))
-    guests["Guido"].append((k, 0))
+    guests[k].append(("gmnr", 0))
+    guests["gmnr"].append((k, 0))
 combs = [deque(x) for x in permutations(guests.keys())]
 scores = [score_configuration(x, guests) for x in combs]
 print(max(scores))

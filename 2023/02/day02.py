@@ -5,7 +5,7 @@
 Solution for day02 2023
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 

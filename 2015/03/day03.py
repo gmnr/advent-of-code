@@ -5,7 +5,7 @@
 Solution for day 03 2015
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 

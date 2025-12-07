@@ -5,7 +5,7 @@
 Helper library for advent-of-code
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 import re

@@ -5,7 +5,7 @@
 Intcode Main Class - refactored
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 

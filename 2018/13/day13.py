@@ -5,7 +5,7 @@
 Solution for day13 2018
 """
 
-__author__ = "Guido Minieri"
+__author__ = "gmnr"
 __license__ = "GPL"
 
 from collections import defaultdict as dd, deque, Counter
