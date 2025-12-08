@@ -80,6 +80,12 @@ def manhattan_dist(a, b) -> int:
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
+def euclidean_dist(a, b) -> float:
+    """Euclidean (L2) distance between two points."""
+    d = sum((pi - qi) ** 2 for pi, qi in zip(a, b)) ** 0.5
+    return int(d) if d.is_integer() else d
+
+
 def mapt(function, *sequences) -> tuple:
     """`map`, with the result as a tuple."""
     return tuple(map(function, *sequences))
@@ -88,6 +94,11 @@ def mapt(function, *sequences) -> tuple:
 def mapl(function, *sequences) -> list:
     """`map`, with the result as a list."""
     return list(map(function, *sequences))
+
+
+def lprint(arg):
+    """Print iterable in lines"""
+    print(*arg, sep="\n")
 
 
 def astar(start, end, grid, cost_fn=lambda x: 1, heuristic_fn=manhattan_dist):
