@@ -12,10 +12,10 @@ import re
 import heapq
 import operator
 from itertools import chain
-from typing import Dict, List, Tuple, Sequence, Any
+from typing import Sequence, Any
 
 
-def read_input(src="input", parser=str, sep="\n") -> Tuple:
+def read_input(src="input", parser=str, sep="\n") -> tuple:
     """Get input from file or variable and return a tuple based on a parser function"""
     if src == "input":
         text = open("input.txt").read()
@@ -24,22 +24,22 @@ def read_input(src="input", parser=str, sep="\n") -> Tuple:
     return tuple(map(parser, text.rstrip().split(sep)))
 
 
-def ints(text) -> Tuple:
+def ints(text) -> tuple:
     """A tuple of all the integers in text, ignoring non-number characters."""
     return tuple(map(int, re.findall(r"-?[0-9]+", text)))
 
 
-def words(text) -> List:
+def words(text) -> list:
     """A list of all the alphabetic words in text, ignoring non-letters."""
     return re.findall(r"[a-zA-Z]+", text)
 
 
-def transpose(matrix) -> List:
+def transpose(matrix) -> list:
     """Transpose a matrix"""
     return list(zip(*matrix))
 
 
-def rotate90(matrix) -> List:
+def rotate90(matrix) -> list:
     """Rotate a list of arrays by 90 deg"""
     new = []
     for c in range(len(matrix[0])):
@@ -47,7 +47,8 @@ def rotate90(matrix) -> List:
         new.append(new_row)
     return new
 
-def tee(matrix: Sequence[Sequence]) -> List[Tuple]:
+
+def tee(matrix: Sequence[Sequence]) -> list[tuple]:
     """The transpose of a matrix: T([(1,2,3), (4,5,6)]) == [(1,4), (2,5), (3,6)]"""
     return list(zip(*matrix))
 
@@ -57,7 +58,7 @@ def first(iterable, default=None) -> Any:
     return next(iter(iterable), default)
 
 
-def to_grid(arr) -> Dict:
+def to_grid(arr) -> dict:
     """Return ascii representation of grid into a dict"""
     grid = {}
     for y, line in enumerate(arr):
@@ -81,7 +82,7 @@ def gen_coordinates(coord, n=4) -> Any:
     yield from ((x + dx, y + dy) for dx, dy in nb)
 
 
-def T(matrix: Sequence[Sequence]) -> List[Tuple]:
+def T(matrix: Sequence[Sequence]) -> list[tuple]:
     """Transpose a matrix: tee([(1,2,3), (4,5,6)]) == [(1,4), (2,5), (3,6)]"""
     return list(zip(*matrix))
 
@@ -97,12 +98,12 @@ def euclidean_dist(a, b) -> float:
     return int(d) if d.is_integer() else d
 
 
-def mapt(function, *sequences) -> Tuple:
+def mapt(function, *sequences) -> tuple:
     """`map`, with the result as a tuple."""
     return tuple(map(function, *sequences))
 
 
-def mapl(function, *sequences) -> List:
+def mapl(function, *sequences) -> list:
     """`map`, with the result as a list."""
     return list(map(function, *sequences))
 
@@ -112,7 +113,7 @@ def lprint(arg) -> None:
     print(*arg, sep="\n")
 
 
-def astar(start, end, grid, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist) -> Tuple:
+def astar(start, end, grid, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist) -> tuple:
     """Imprementation of A* algo"""
     frontier = []
     heapq.heappush(frontier, (start, 0))
@@ -139,14 +140,14 @@ def astar(start, end, grid, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist) ->
     return previous, cost
 
 
-flatten = chain.from_iterable 
+flatten = chain.from_iterable
 
 
-def add_tuples(a, b) -> Tuple:
+def add_tuples(a, b) -> tuple:
     """Sum two tuples together"""
     return mapt(operator.add, a, b)
 
 
-def sub_tuples(a, b) -> Tuple:
+def sub_tuples(a, b) -> tuple:
     """Subtract two tuples together"""
     return mapt(operator.sub, a, b)
