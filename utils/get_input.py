@@ -27,7 +27,7 @@ month = today.month
 day = today.day
 
 # exit the program if there are no challenges today
-if month != 12 or day > 25:
+if month != 12 or day > 12:
     print("There are no challanges today!")
     sys.exit()
 
