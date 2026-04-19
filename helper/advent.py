@@ -48,11 +48,6 @@ def rotate90(matrix) -> list:
     return new
 
 
-def tee(matrix: Sequence[Sequence]) -> list[tuple]:
-    """The transpose of a matrix: T([(1,2,3), (4,5,6)]) == [(1,4), (2,5), (3,6)]"""
-    return list(zip(*matrix))
-
-
 def first(iterable, default=None) -> Any:
     """Return first item in iterable, or default."""
     return next(iter(iterable), default)
@@ -83,7 +78,7 @@ def gen_coordinates(coord, n=4) -> Any:
 
 
 def T(matrix: Sequence[Sequence]) -> list[tuple]:
-    """Transpose a matrix: tee([(1,2,3), (4,5,6)]) == [(1,4), (2,5), (3,6)]"""
+    """Transpose a matrix: T([(1,2,3), (4,5,6)]) == [(1,4), (2,5), (3,6)]"""
     return list(zip(*matrix))
 
 
