@@ -12,8 +12,10 @@ import re
 import heapq
 import operator
 from itertools import chain
+from collections import deque
 
 
+# input
 def read_input(src="input", parser=str, sep="\n") -> tuple:
     """Get input from file or variable and return a tuple based on a parser function"""
     if src == "input":
@@ -23,6 +25,7 @@ def read_input(src="input", parser=str, sep="\n") -> tuple:
     return tuple(map(parser, text.rstrip().split(sep)))
 
 
+# atomic operations
 def ints(text) -> tuple:
     """A tuple of all the integers in text, ignoring non-number characters."""
     return tuple(map(int, re.findall(r"-?[0-9]+", text)))
@@ -39,6 +42,30 @@ def minmax(numbers) -> tuple:
     return min(numbers), max(numbers)
 
 
+def first(iterable, default=None):
+    """Return first item in iterable, or default."""
+    return next(iter(iterable), default)
+
+
+def add_tuples(a, b) -> tuple:
+    """Sum two tuples together"""
+    return mapt(operator.add, a, b)
+
+
+def sub_tuples(a, b) -> tuple:
+    """Subtract two tuples together"""
+    return mapt(operator.sub, a, b)
+
+
+flatten = chain.from_iterable
+
+
+def lprint(arg) -> None:
+    """Print iterable in lines"""
+    print(*arg, sep="\n")
+
+
+# work with matrix and grids
 def tee(matrix) -> list:
     """Transpose a matrix"""
     return list(zip(*matrix))
@@ -51,11 +78,6 @@ def rotate90(matrix) -> list:
         new_row = [row[c] for row in matrix][::-1]
         new.append(new_row)
     return new
-
-
-def first(iterable, default=None):
-    """Return first item in iterable, or default."""
-    return next(iter(iterable), default)
 
 
 def to_grid(arr) -> dict:
@@ -103,13 +125,32 @@ def mapl(function, *sequences) -> list:
     return list(map(function, *sequences))
 
 
-def lprint(arg) -> None:
-    """Print iterable in lines"""
-    print(*arg, sep="\n")
+# path finding
+def bfs(start, end, grid, proximity_fn, *fn_args) -> int:
+    """Breadth-first search, returns the number of steps to reach goal or 0 if there is no solution"""
+    frontier = deque([(start, 0)])
+    explored = set([start])
+
+    while frontier:
+        current, steps = frontier.popleft()
+
+        if current == end:
+            return steps
+
+        for next in proximity_fn(current, *fn_args):
+            if next not in explored and next in grid:
+                frontier.append((next, steps + 1))
+                explored.add(next)
+    return 0
+
+
+def djikstra(start, end, grid):
+    """Imprementation of Djikstra"""
+    pass
 
 
 def astar(start, end, grid, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist) -> tuple:
-    """Imprementation of A* algo"""
+    """Imprementation of A*"""
     frontier = []
     heapq.heappush(frontier, (start, 0))
 
@@ -133,16 +174,3 @@ def astar(start, end, grid, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist) ->
                     previous[n] = current
 
     return previous, cost
-
-
-flatten = chain.from_iterable
-
-
-def add_tuples(a, b) -> tuple:
-    """Sum two tuples together"""
-    return mapt(operator.add, a, b)
-
-
-def sub_tuples(a, b) -> tuple:
-    """Subtract two tuples together"""
-    return mapt(operator.sub, a, b)
