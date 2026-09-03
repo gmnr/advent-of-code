@@ -12,7 +12,6 @@ import re
 import heapq
 import operator
 from itertools import chain
-from typing import Sequence, Any
 
 
 def read_input(src="input", parser=str, sep="\n") -> tuple:
@@ -34,7 +33,13 @@ def words(text) -> list:
     return re.findall(r"[a-zA-Z]+", text)
 
 
-def transpose(matrix) -> list:
+def minmax(numbers) -> tuple:
+    """A tuple of the (minimum, maximum) of numbers."""
+    numbers = list(numbers)
+    return min(numbers), max(numbers)
+
+
+def tee(matrix) -> list:
     """Transpose a matrix"""
     return list(zip(*matrix))
 
@@ -48,7 +53,7 @@ def rotate90(matrix) -> list:
     return new
 
 
-def first(iterable, default=None) -> Any:
+def first(iterable, default=None):
     """Return first item in iterable, or default."""
     return next(iter(iterable), default)
 
@@ -62,7 +67,7 @@ def to_grid(arr) -> dict:
     return grid
 
 
-def gen_coordinates(coord, n=4) -> Any:
+def gen_coordinates(coord, n=4):
     """Generate 4, 8, 9 points around the given `coord`"""
     x, y = coord
     nb = ((0, 1), (1, 0), (0, -1), (-1, 0))
@@ -75,11 +80,6 @@ def gen_coordinates(coord, n=4) -> Any:
     else:
         return False
     yield from ((x + dx, y + dy) for dx, dy in nb)
-
-
-def T(matrix: Sequence[Sequence]) -> list[tuple]:
-    """Transpose a matrix: T([(1,2,3), (4,5,6)]) == [(1,4), (2,5), (3,6)]"""
-    return list(zip(*matrix))
 
 
 def manhattan_dist(a, b) -> int:
