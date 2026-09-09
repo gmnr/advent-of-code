@@ -35,7 +35,7 @@ def bfs(src, steps, grid):
 
         visited.add(c)
 
-        for n in aoc.gen_coordinates(c):
+        for n in aoc.neighbors(c):
             r, c = n
             if grid[r % h][c % h] == "#":
                 continue

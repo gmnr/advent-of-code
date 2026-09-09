@@ -26,7 +26,7 @@ def space(coord, salt):
 
 
 def adj(coord, salt):
-    for c in aoc.gen_coordinates(coord):
+    for c in aoc.neighbors(coord):
         cx, cy = c
         if space(c, salt) == "." and cx >= 0 and cy >= 0:
             yield c

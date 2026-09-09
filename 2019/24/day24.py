@@ -9,7 +9,7 @@ __author__ = "gmnr"
 __license__ = "GPL"
 
 
-from helper import advent
+from helper import advent as aoc
 
 test = """....#
 #..#.
@@ -17,7 +17,7 @@ test = """....#
 ..#..
 #...."""
 
-data = advent.read_input()
+data = aoc.read_input()
 
 
 def parse(data):
@@ -32,7 +32,7 @@ def evolve(bugs):
     new_bugs = {}
     with_bugs = {k for k, v in bugs.items() if v == "#"}
     for c, v in bugs.items():
-        adj = len(set(advent.gen_coordinates(c)).intersection(with_bugs))
+        adj = len(set(aoc.neighbors(c)).intersection(with_bugs))
         if v == "#":
             if adj != 1:
                 new_bugs[c] = "."

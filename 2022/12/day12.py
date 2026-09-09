@@ -24,7 +24,7 @@ for y, l in enumerate(data):
 
 
 def gen_height(area, node):
-    coord = aoc.gen_coordinates(node)
+    coord = aoc.neighbors(node)
 
     max_y = len(area) - 1
     max_x = len(area[0]) - 1

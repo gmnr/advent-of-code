@@ -61,7 +61,7 @@ loop = set([start])
 
 while to_visit:
     c = to_visit.popleft()
-    for n in aoc.gen_coordinates(c):
+    for n in aoc.neighbors(c):
         if (
             n not in loop
             and n in coords

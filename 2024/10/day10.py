@@ -30,7 +30,7 @@ def is_reachable(map, start, end, path=[]):
 
     if start == end:
         paths.append(path)
-    for n in aoc.gen_coordinates(start):
+    for n in aoc.neighbors(start):
         if n in map:
             if map[n] - map[start] == 1:
                 is_reachable(map, n, end, path)

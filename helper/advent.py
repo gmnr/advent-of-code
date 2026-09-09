@@ -89,7 +89,7 @@ def to_grid(arr) -> dict:
     return grid
 
 
-def gen_coordinates(coord, n=4):
+def neighbors(coord, n=4):
     """Generate 4, 8, 9 points around the given `coord`"""
     x, y = coord
     nb = ((0, 1), (1, 0), (0, -1), (-1, 0))
@@ -126,7 +126,7 @@ def mapl(function, *sequences) -> list:
 
 
 # path finding
-def bfs(start, end, grid, proximity_fn, *fn_args) -> int:
+def bfs_search(start, end, grid, move_fn) -> int:
     """Breadth-first search, returns the number of steps to reach goal or 0 if there is no solution"""
     frontier = deque([(start, 0)])
     explored = set([start])
@@ -137,19 +137,21 @@ def bfs(start, end, grid, proximity_fn, *fn_args) -> int:
         if current == end:
             return steps
 
-        for next in proximity_fn(current, *fn_args):
+        for next in move_fn(current):
             if next not in explored and next in grid:
                 frontier.append((next, steps + 1))
                 explored.add(next)
     return 0
 
 
-def djikstra(start, end, grid):
+def djikstra_search(start, end, grid, move_fn):
     """Imprementation of Djikstra"""
     pass
 
 
-def astar(start, end, grid, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist) -> tuple:
+def astar(
+    start, end, grid, move_fn, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist
+) -> tuple:
     """Imprementation of A*"""
     frontier = []
     heapq.heappush(frontier, (start, 0))
@@ -164,7 +166,7 @@ def astar(start, end, grid, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist) ->
         if current == end:
             break
 
-        for n in gen_coordinates(current):
+        for n in move_fn(current):
             if n in grid:
                 new_cost = cost[current] + cost_fn(n)
                 if n not in cost or new_cost < cost[n]:

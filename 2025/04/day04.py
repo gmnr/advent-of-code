@@ -22,7 +22,7 @@ movable = 0
 for c in grid:
     if grid[c] != "@":
         continue
-    adjacent = aoc.gen_coordinates(c, n=8)
+    adjacent = aoc.neighbors(c, n=8)
     vals = []
     for x in adjacent:
         if x not in grid:
@@ -46,7 +46,7 @@ while to_remove:
     for c in grid:
         if grid[c] != "@":
             continue
-        adjacent = aoc.gen_coordinates(c, n=8)
+        adjacent = aoc.neighbors(c, n=8)
         vals = []
         for x in adjacent:
             if x not in grid:

@@ -41,7 +41,7 @@ for _, point in nums.items():
     num, coords = point
     found = False
     for p in coords:
-        for n in aoc.gen_coordinates(p, 8):
+        for n in aoc.neighbors(p, 8):
             if n in poi:
                 checksum += int(num)
                 found = True
@@ -57,7 +57,7 @@ gears = [k for k, v in engine_map.items() if re.match(r"\*", v)]
 counts = []
 for g in gears:
     g_count = []
-    for n in aoc.gen_coordinates(g, 8):
+    for n in aoc.neighbors(g, 8):
         for _, point in nums.items():
             num, coords = point
             if n in coords:

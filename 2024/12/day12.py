@@ -22,7 +22,7 @@ for y, line in enumerate(data):
 def get_perimeter(points):
     perimeter = 0
     for p in points:
-        for adjacent in aoc.gen_coordinates(p):
+        for adjacent in aoc.neighbors(p):
             if adjacent not in points:
                 perimeter += 1
     return perimeter
@@ -34,7 +34,7 @@ def fill_plot(start, plot, plots):
 
     while frontier:
         curr = frontier.pop()
-        for c in aoc.gen_coordinates(curr):
+        for c in aoc.neighbors(curr):
             if c not in plots or c in res:
                 continue
             else:
@@ -51,7 +51,7 @@ def get_sides(points):
 
     for p in points:
 
-        mask = [x in points for x in aoc.gen_coordinates(p, 8)]
+        mask = [x in points for x in aoc.neighbors(p, 8)]
         if not mask[5] and not mask[4]:
             sides += 1
         if not mask[4] and not mask[7]:

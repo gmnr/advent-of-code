@@ -22,7 +22,7 @@ def bfs_mem_size(start, end, grid) -> int:
 
     while frontier:
         current, steps = frontier.popleft()
-        for next in aoc.gen_coordinates(current):
+        for next in aoc.neighbors(current):
 
             if next not in grid:
                 continue

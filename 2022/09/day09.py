@@ -38,7 +38,7 @@ def approach(c1, c2):
         return min(points, key=lambda x: x[1])[0]
 
     else:
-        adj = list(aoc.gen_coordinates(c1))
+        adj = list(aoc.neighbors(c1))
         d = [dist(i, c2) for i in adj]
         points = list(zip(adj, d))
         return min(points, key=lambda x: x[1])[0]
@@ -50,7 +50,7 @@ def move(h, t, d, is_tail=False):
     if not is_tail:
         h = tuple(map(sum, zip(h, moves[d])))
 
-    if t not in aoc.gen_coordinates(h, 8) and t != h:
+    if t not in aoc.neighbors(h, 8) and t != h:
         t = approach(h, t)
 
     return h, t
