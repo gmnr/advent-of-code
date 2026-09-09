@@ -9,10 +9,10 @@ __author__ = "gmnr"
 __license__ = "GPL"
 
 import re
-import heapq
 import operator
 from itertools import chain
 from collections import deque
+from heapq import heappop, heappush
 
 
 # input
@@ -144,35 +144,25 @@ def bfs_search(start, end, grid, move_fn) -> int:
     return 0
 
 
-def djikstra_search(start, end, grid, move_fn):
-    """Imprementation of Djikstra"""
-    pass
-
-
-def astar(
-    start, end, grid, move_fn, cost_fn=lambda _: 1, heuristic_fn=manhattan_dist
-) -> tuple:
-    """Imprementation of A*"""
-    frontier = []
-    heapq.heappush(frontier, (start, 0))
-
+def astar_search(start, end, grid, move_fn, h_fn, cost_fn=lambda _: 1):
+    """A* search, returns the whole path based on move and cost functions"""
+    frontier = [(h_fn(start), start)]
     previous = {start: None}
-    cost = {start: 0}
+    path = lambda x: ([] if (x is None) else path(previous[x]) + [x])
+    path_cost = {start: 0}
 
     while frontier:
+        f, step = heappop(frontier)
+        if h_fn(step) == 0:
+            return path(step)
 
-        current, _ = heapq.heappop(frontier)
+        for next in move_fn(step):
 
-        if current == end:
-            break
+            if next not in grid:
+                continue
 
-        for n in move_fn(current):
-            if n in grid:
-                new_cost = cost[current] + cost_fn(n)
-                if n not in cost or new_cost < cost[n]:
-                    cost[n] = new_cost
-                    priority = new_cost + heuristic_fn(n, end)
-                    heapq.heappush(frontier, (n, priority))
-                    previous[n] = current
-
-    return previous, cost
+            g = path_cost[step] + cost_fn(step, next)
+            if next not in path_cost or g < path_cost[next]:
+                heappush(frontier, (g + h_fn(next), next))
+                path_cost[next] = g
+                previous[next] = step
