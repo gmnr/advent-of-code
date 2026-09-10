@@ -16,12 +16,13 @@ from heapq import heappop, heappush
 
 
 # input
-def read_input(src="input", parser=str, sep="\n") -> tuple:
+def read_input(caller_scope, parser=str, sep="\n", src="input") -> tuple:
     """Get input from file or variable and return a tuple based on a parser function"""
+    test = caller_scope.get("test", False)
+    if test:
+        return tuple(map(parser, test.rstrip().split(sep)))
     if src == "input":
         text = open("input.txt").read()
-    else:
-        text = src
     return tuple(map(parser, text.rstrip().split(sep)))
 
 

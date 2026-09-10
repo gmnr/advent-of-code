@@ -83,7 +83,7 @@ __license__ = "GPL"
 
 import helper.advent as aoc
 
-data = aoc.read_input()
+data = aoc.read_input(locals())
 print(data)
 '''
 
