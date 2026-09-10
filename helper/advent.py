@@ -144,25 +144,33 @@ def bfs_search(start, end, grid, move_fn) -> int:
     return 0
 
 
-def astar_search(start, end, grid, move_fn, h_fn, cost_fn=lambda _: 1):
-    """A* search, returns the whole path based on move and cost functions"""
-    frontier = [(h_fn(start), start)]
+def astar_search(start, end, move_fn, h_fn, cost_fn=lambda *_: 1):
+    frontier = [(h_fn(start, end), start)]
     previous = {start: None}
-    path = lambda x: ([] if (x is None) else path(previous[x]) + [x])
     path_cost = {start: 0}
+
+    def build_path(step):
+        path = []
+        curr = step
+        while curr is not None:
+            path.append(curr)
+            curr = previous[curr]
+        return path[::-1]
 
     while frontier:
         f, step = heappop(frontier)
-        if h_fn(step) == 0:
-            return path(step)
 
-        for next in move_fn(step):
+        if step == end:
+            return build_path(step)
 
-            if next not in grid:
-                continue
+        if f > path_cost[step] + h_fn(step, end):
+            continue
 
-            g = path_cost[step] + cost_fn(step, next)
-            if next not in path_cost or g < path_cost[next]:
-                heappush(frontier, (g + h_fn(next), next))
-                path_cost[next] = g
-                previous[next] = step
+        for next_step in move_fn(step):
+            g = path_cost[step] + cost_fn(step, next_step)
+            if next_step not in path_cost or g < path_cost[next_step]:
+                path_cost[next_step] = g
+                previous[next_step] = step
+                heappush(frontier, (g + h_fn(next_step, end), next_step))
+
+    return None
