@@ -160,7 +160,7 @@ def astar_search(start, end, move_fn, h_fn, cost_fn=lambda *_: 1):
     while frontier:
         f, step = heappop(frontier)
 
-        if step == end:
+        if h_fn(step, end) == 0 or step == end:
             return build_path(step)
 
         if f > path_cost[step] + h_fn(step, end):
