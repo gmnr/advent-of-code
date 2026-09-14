@@ -14,7 +14,6 @@ import sys
 sys.path.append("..")
 from intcode import Intcode
 
-
 with open("input.txt", "r") as f:
     data = f.read()
 
@@ -26,12 +25,7 @@ class Game(Intcode):
         self.paddle = []
         super().__init__(data)
 
-    def extend(self):
-        memory = [0] * 500
-        self.arr += memory
-        self.arr[0] = 2
-
-    def manipulate(self):
+    def move_ball(self):
         if len(self.outputs) % 3 == 0 and self.outputs != []:
             x = self.outputs[-3]
             y = self.outputs[-2]
@@ -65,9 +59,11 @@ class Game(Intcode):
         listBlocks = self.findType(2)
         return len(listBlocks)
 
-    conv = {0: " ", 1: "W", 2: "x", 3: "=", 4: "O"}
 
-
+# pt 1
 arcade = Game(data)
 print(arcade.numBlocks())
-print(arcade.score)
+
+# pt 2
+free_game = Game("2" + data[1:])
+print(free_game.score)

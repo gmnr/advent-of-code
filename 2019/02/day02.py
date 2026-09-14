@@ -18,13 +18,20 @@ from intcode import Intcode
 with open("input.txt", "r") as f:
     data = f.read()
 
-data = list(data)
-data[2] = "12"
-data[4] = "2"
-data = "".join(data)
+new_data = list(data)
+new_data[2] = "12"
+new_data[4] = "2"
+new_data = "".join(new_data)
 
-intcode = Intcode(data)
-print(intcode.arr[0])
+intcode = Intcode(new_data)
+print(intcode.mem[0])
 
 target = 19690720
-print(intcode.findTarget(target))
+for noun in range(100):
+    for verb in range(100):
+        try_data = data.split(",")
+        try_data[1] = str(noun)
+        try_data[2] = str(verb)
+        intcode = Intcode(",".join(try_data))
+        if intcode.mem[0] == target:
+            print(100 * noun + verb)

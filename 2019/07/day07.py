@@ -20,7 +20,6 @@ sys.path.append("..")
 from intcode import Intcode
 from itertools import permutations
 
-
 phase_poss = permutations([0, 1, 2, 3, 4])
 feedback_poss = permutations([5, 6, 7, 8, 9])
 
@@ -58,7 +57,7 @@ def feedback_thruster(lst):
         d.feedbackInput(c.output)
         e.feedbackInput(d.output)
 
-        if e.halt:
+        if e.halted:
             break
 
     return e.output
@@ -70,13 +69,11 @@ for com in phase_poss:
 
 max_phase = max(results, key=results.get)
 max_thrust = results[max_phase]
-print(f"{max_phase} --> {max_thrust}")
-
-print("-" * 20)
+print(max_thrust)
 
 for fee in feedback_poss:
     results_feedback.update({"".join([str(x) for x in fee]): feedback_thruster(fee)})
 
 max_feedback = max(results_feedback, key=results_feedback.get)
 max_fee_thrust = results_feedback[max_feedback]
-print(f"{max_feedback} --> {max_fee_thrust}")
+print(max_fee_thrust)
