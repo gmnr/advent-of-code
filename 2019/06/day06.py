@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Docstring
+Solution for day06 2019
 """
 
 __author__ = "gmnr"
@@ -101,14 +101,12 @@ main = Coordinates(data)
 
 
 # part 1
-# print(main.checksum())
+print(main.checksum())
 
 # part 2
 me = main.findOrbit("YOU")
 santa = main.findOrbit("SAN")
 common = main.findCommonAncestor(me, santa)
 
-total = (
-    main.findDistance(me, common) + main.findDistance(santa, common) - 2
-)  # 2 if to account for the fact that you need to reach the center (and not the orbit)
+total = main.findDistance(me, common) + main.findDistance(santa, common) - 2
 print(total)

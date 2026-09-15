@@ -20,12 +20,20 @@ sys.path.append("..")
 from intcode import Intcode
 
 
-# part 1
-solution1 = Intcode(data, 1)
-part1 = solution1.output
+def run_vm(input):
+    vm = Intcode(data)
+    process = vm.run(input)
+    output = []
+    for val in process:
+
+        if val == "NEED_INPUT":
+            process.send(input)
+        output.append(val)
+    return output[-1]
 
 
-# part 2
-solution2 = Intcode(data, 5)
-part2 = solution2.output
-print(f"The solution for Part 1 is {part1}\nTHe solution for Part 2 is {part2}")
+# pt 1
+print(run_vm(1))
+
+# pt 2
+print(run_vm(5))

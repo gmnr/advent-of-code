@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Docstring
+Solution for day09 2019
 """
 
 __author__ = "gmnr"
@@ -18,8 +18,12 @@ import sys
 sys.path.append("..")
 from intcode import Intcode
 
-intcode = Intcode(data)
-print(intcode.output)
+# pt 1
+process = Intcode(data).run(1)
+for val in process:
+    print(val)
 
-boost = Intcode(data, inpt=2)
-print(boost.output)
+# pt 2
+process = Intcode(data).run(2)
+for val in process:
+    print(val)
