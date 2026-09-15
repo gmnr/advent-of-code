@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-solution for day07 2019
+Solution for day07 2019
 """
 
 __author__ = "gmnr"
@@ -20,60 +20,52 @@ sys.path.append("..")
 from intcode import Intcode
 from itertools import permutations
 
-phase_poss = permutations([0, 1, 2, 3, 4])
-feedback_poss = permutations([5, 6, 7, 8, 9])
+# pt 1
+max_signal = 0
 
-results = {}
-results_feedback = {}
+for phase_setting in permutations(range(5)):
+    signal = 0
 
+    for phase in phase_setting:
+        vm = Intcode(data)
+        outputs = vm.run_all(inputs=[phase, signal])
+        signal = outputs[0]
 
-def compute_thrusters(lst):
-    in_a, in_b, in_c, in_d, in_e = (*lst,)
-    a = Intcode(data, [in_a, 0])
-    b = Intcode(data, [in_b, a.output])
-    c = Intcode(data, [in_c, b.output])
-    d = Intcode(data, [in_d, c.output])
-    e = Intcode(data, [in_e, d.output])
-    e = e.output
+    max_signal = max(max_signal, signal)
+print(max_signal)
 
-    return e
+# pt 2
+max_signal = 0
 
+for phase_setting in permutations(range(5, 10)):
 
-def feedback_thruster(lst):
-    in_a, in_b, in_c, in_d, in_e = (*lst,)
+    vms = [Intcode(data) for _ in range(5)]
+    processes = [vm.run() for vm in vms]
 
-    # initialize the variables
-    a = Intcode(data, [in_a, 0], once=True)
-    b = Intcode(data, [in_b, a.output], once=True)
-    c = Intcode(data, [in_c, b.output], once=True)
-    d = Intcode(data, [in_d, c.output], once=True)
-    e = Intcode(data, [in_e, d.output], once=True)
+    for i, proc in enumerate(processes):
+        val = next(proc)
+        if val == "INPUT_REQUIRED":
+            proc.send(phase_setting[i])
 
-    # start the feedback loop
-    while True:
-        a.feedbackInput(e.output)
-        b.feedbackInput(a.output)
-        c.feedbackInput(b.output)
-        d.feedbackInput(c.output)
-        e.feedbackInput(d.output)
+    signal = 0
+    amp_idx = 0
 
-        if e.halted:
-            break
+    while not vms[-1].halted:
+        proc = processes[amp_idx]
 
-    return e.output
+        try:
+            val = proc.send(signal)
 
+            while val == "INPUT_REQUIRED":
+                val = proc.send(None)
 
-# solution for part 1
-for com in phase_poss:
-    results.update({"".join([str(x) for x in com]): compute_thrusters(com)})
+            if val is not None:
+                signal = val
 
-max_phase = max(results, key=results.get)
-max_thrust = results[max_phase]
-print(max_thrust)
+        except StopIteration:
+            pass
 
-for fee in feedback_poss:
-    results_feedback.update({"".join([str(x) for x in fee]): feedback_thruster(fee)})
+        amp_idx = (amp_idx + 1) % 5
+    max_signal = max(max_signal, signal)
 
-max_feedback = max(results_feedback, key=results_feedback.get)
-max_fee_thrust = results_feedback[max_feedback]
-print(max_fee_thrust)
+print(max_signal)
