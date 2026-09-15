@@ -9,7 +9,7 @@ __author__ = "gmnr"
 __license__ = "GPL"
 
 
-from collections import defaultdict
+from collections import defaultdict, deque
 
 
 class Intcode:
@@ -31,7 +31,7 @@ class Intcode:
         raise ValueError(f"Unknown mode: {mode}")
 
     def run(self, input_val=None):
-        """start the main loop that runs the instructions"""
+        """Start the main loop that runs the instructions"""
 
         while True:
             instr = f"{self.mem[self.c]:05d}"
@@ -63,7 +63,7 @@ class Intcode:
             elif opcode == 3:
                 dest = self.get_addr(v1, 1)
                 if input_val is None:
-                    input_val = yield "NEED_INPUT"
+                    input_val = yield "INPUT_REQUIRED"
                 self.mem[dest] = input_val
                 input_val = None
                 self.c += 2
@@ -114,5 +114,25 @@ class Intcode:
             else:
                 raise ValueError(f"Invalid opcode {opcode} at IP {self.c}")
 
+    def run_all(self, inputs=None):
+        """Returns a list of all produced outputs"""
+        input_queue = deque([inputs] if isinstance(inputs, int) else (inputs or []))
+        outputs = []
+        process = self.run()
+
+        try:
+            val = next(process)
+            while not self.halted:
+                if val == "INPUT_REQUIRED":
+                    next_input = input_queue.popleft() if input_queue else None
+                    val = process.send(next_input)
+                else:
+                    outputs.append(val)
+                    val = next(process)
+        except StopIteration:
+            pass
+
+        return outputs
+
     def __repr__(self):
-        return ",".join([str(x) for x in self.mem.values()])
+        return ", ".join([str(x) for x in self.mem.values()])
