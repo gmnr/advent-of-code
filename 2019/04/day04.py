@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Solution for day 4
+Solution for day04 2019
 """
 
 __author__ = "gmnr"

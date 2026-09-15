@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-solution for day 10
+Solution for day10 2019
 """
 
 __author__ = "gmnr"
@@ -10,7 +10,6 @@ __license__ = "GPL"
 
 
 from math import degrees as d, atan2, sqrt
-
 
 with open("input.txt", "r") as f:
     data = f.read()

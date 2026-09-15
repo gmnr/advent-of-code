@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-solution for the first day of the advent of code
+Solution for day01 2019
 """
 
 __author__ = "gmnr"
@@ -14,7 +14,6 @@ with open("input.txt", "r") as f:
     data = f.read().split("\n")[:-1]  # remove the last item which is an empty string
 
 from math import floor
-
 
 # Part 1
 mass = [int(x) for x in data]

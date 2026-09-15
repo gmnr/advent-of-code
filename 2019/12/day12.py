@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-solution for day 12 2019
+Solution for day12 2019
 """
 
 __author__ = "gmnr"
@@ -11,7 +11,6 @@ __license__ = "GPL"
 
 from itertools import combinations
 import numpy
-
 
 with open("input.txt", "r") as f:
     data = f.read()[:-1]
