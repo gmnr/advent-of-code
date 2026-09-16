@@ -44,7 +44,7 @@ for phase_setting in permutations(range(5, 10)):
 
     for i, proc in enumerate(processes):
         val = next(proc)
-        if val == "INPUT_REQUIRED":
+        if val == Intcode.WAITING:
             proc.send(phase_setting[i])
 
     signal = 0
@@ -56,7 +56,7 @@ for phase_setting in permutations(range(5, 10)):
         try:
             val = proc.send(signal)
 
-            while val == "INPUT_REQUIRED":
+            while val == Intcode.WAITING:
                 val = proc.send(None)
 
             if val is not None:

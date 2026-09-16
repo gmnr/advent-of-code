@@ -26,7 +26,7 @@ def run_vm(input):
     output = []
     for val in process:
 
-        if val == "INPUT_REQUIRED":
+        if val == Intcode.WAITING:
             process.send(input)
         output.append(val)
     return output[-1]

@@ -19,6 +19,8 @@ class Intcode:
         self.c = 0
         self.rel = 0
 
+    WAITING = "INPUT_REQUIRED"
+
     def get_addr(self, mode, pos):
         """Determine the mode of the instruction"""
         param = self.mem[self.c + pos]
@@ -63,7 +65,7 @@ class Intcode:
             elif opcode == 3:
                 dest = self.get_addr(v1, 1)
                 if input_val is None:
-                    input_val = yield "INPUT_REQUIRED"
+                    input_val = yield Intcode.WAITING
                 self.mem[dest] = input_val
                 input_val = None
                 self.c += 2
@@ -123,7 +125,7 @@ class Intcode:
         try:
             val = next(process)
             while not self.halted:
-                if val == "INPUT_REQUIRED":
+                if val == Intcode.WAITING:
                     next_input = input_queue.popleft() if input_queue else None
                     val = process.send(next_input)
                 else:

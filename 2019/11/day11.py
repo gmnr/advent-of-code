@@ -34,7 +34,7 @@ def run_robot(init=0):
         val = next(process)
 
         while not vm.halted:
-            if val == "INPUT_REQUIRED":
+            if val == Intcode.WAITING:
 
                 curr_color = grid[(x, y)]
                 val = process.send(curr_color)
