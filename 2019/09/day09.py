@@ -9,14 +9,10 @@ __author__ = "gmnr"
 __license__ = "GPL"
 
 
+from intcode import Intcode
+
 with open("input.txt", "r") as f:
     data = f.read()
-
-
-import sys
-
-sys.path.append("..")
-from intcode import Intcode
 
 # pt 1
 process = Intcode(data).run(1)

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-solution for day 13 2019
+Solution for day13 2019
 """
 
 __author__ = "gmnr"
@@ -10,9 +10,6 @@ __license__ = "GPL"
 
 
 from collections import defaultdict
-import sys
-
-sys.path.append("..")
 from intcode import Intcode
 
 with open("input.txt", "r") as f:

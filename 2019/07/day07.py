@@ -9,16 +9,11 @@ __author__ = "gmnr"
 __license__ = "GPL"
 
 
-# get data
-with open("input.txt", "r") as f:
-    data = f.read()
-
-
-import sys
-
-sys.path.append("..")
 from intcode import Intcode
 from itertools import permutations
+
+with open("input.txt", "r") as f:
+    data = f.read()
 
 # pt 1
 max_signal = 0

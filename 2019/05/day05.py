@@ -9,15 +9,10 @@ __author__ = "gmnr"
 __license__ = "GPL"
 
 
-# get data
+from intcode import Intcode
+
 with open("input.txt", "r") as f:
     data = f.read()
-
-
-import sys
-
-sys.path.append("..")
-from intcode import Intcode
 
 
 def run_vm(input):

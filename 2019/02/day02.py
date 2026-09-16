@@ -9,9 +9,6 @@ __author__ = "gmnr"
 __license__ = "GPL"
 
 
-import sys
-
-sys.path.append("..")
 from intcode import Intcode
 
 with open("input.txt", "r") as f:
