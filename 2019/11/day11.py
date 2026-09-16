@@ -10,97 +10,70 @@ __license__ = "GPL"
 
 
 import sys
+from collections import defaultdict
 
 sys.path.append("..")
 from intcode import Intcode
-from collections import deque
-from matplotlib import pyplot as plt
-
 
 with open("input.txt", "r") as f:
     data = f.read()
 
 
-class Robot(Intcode):
-    def __init__(self, data, once=False, emerg_hull=False):
-        self.coord = [[[0, 0], 0]]
-        self.directions = deque(["up", "right", "down", "left"])
-        self.direction = None
-        self.color = None
-        self.painted = 1
-        self.emerg_hull = emerg_hull
-        self.inpt = None
-        super().__init__(data, once)
+def run_robot(init=0):
+    grid = defaultdict(int)
+    grid[(0, 0)] = init
 
-    def getInput(self):
-        """returns the value that goes in input to op3"""
-        if self.emerg_hull:
-            self.emerg_hull = False
-            return 1
-        value = self.getCurrentColor()
-        return value
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    idx = 0
+    x, y = 0, 0
 
-    def getCurrentColor(self):
-        """returns the color of the tile the robot is standing on"""
-        current = self.coord[-1]
-        self.sensor_color = current[1]
-        return self.sensor_color
+    vm = Intcode(data)
+    process = vm.run()
 
-    def manipulate(self):
-        """allows for the parsing of the 2 intcode outputs: color and rotation"""
-        if len(self.outputs) % 2 == 0 and self.outputs != []:
-            self.color = self.outputs[-2]
-            if self.outputs[-1]:
-                self.directions.rotate(-1)
-                self.direction = self.directions[0]
+    try:
+        val = next(process)
+
+        while not vm.halted:
+            if val == "INPUT_REQUIRED":
+
+                curr_color = grid[(x, y)]
+                val = process.send(curr_color)
+                continue
+
+            paint = val
+            grid[(x, y)] = paint
+
+            turn = next(process)
+            if turn == 0:
+                idx = (idx - 1) % 4
             else:
-                self.directions.rotate(1)
-                self.direction = self.directions[0]
-            self.move()
+                idx = (idx + 1) % 4
 
-    def findTile(self, x, y):
-        """returns the tile if it's tracked, else None"""
-        target = [x, y]
-        for elem in self.coord[::-1]:
-            if elem[0] == target:
-                return elem
+            dx, dy = directions[idx]
+            x += dx
+            y += dy
 
-    def move(self):
-        current = self.coord[-1]
-        current[1] = self.color
+            val = next(process)
 
-        x, y = current[0]  # get current coordinates
-
-        if self.direction == "up":
-            y += 1
-        elif self.direction == "right":
-            x += 1
-        elif self.direction == "down":
-            y -= 1
-        else:
-            x -= 1
-
-        target_tile = self.findTile(x, y)
-        if target_tile:
-            color = target_tile[1]
-        else:
-            color = 0
-            self.painted += 1
-        self.coord.append([[x, y], color])
+    except StopIteration:
+        pass
+    return grid
 
 
-robot = Robot(data)
-print(robot.painted)
+# pt1
+grid = run_robot()
+print(len(grid))
 
+# pt2
+grid = run_robot(1)
+x_coords = [x for x, y in grid.keys()]
+y_coords = [y for x, y in grid.keys()]
 
-# create a new object for part 2
-reg_ident = Robot(data, 1, emerg_hull=True)
-code = [x[0] for x in reg_ident.coord if x[1] == 1]
+min_x, max_x = min(x_coords), max(x_coords)
+min_y, max_y = min(y_coords), max(y_coords)
 
-x_em = [x[0] for x in code]
-y_em = [y[1] for y in code]
-
-plt.scatter(x_em, y_em)
-plt.xlim(-3, 43)
-plt.ylim(-20, 20)
-plt.show()
+for y in range(max_y, min_y - 1, -1):
+    row = ""
+    for x in range(min_x, max_x + 1):
+        row += "#" if grid[(x, y)] == 1 else " "
+    print(row)
